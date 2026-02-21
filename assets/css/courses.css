@@ -3,6 +3,8 @@
    Color System: Deep charcoal + Emerald + Teal + Cyan
 ============================================ */
 
+/* ── Font Face — Inter Variable (self-hosted) ── */
+
 /* ── Variables ── */
 
 :root {
@@ -38,15 +40,6 @@
   --speed-normal: 0.3s;
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-/* ── Bridge Variables (unified system for all pages) ── */
-
-/* Maps new naming convention to existing values */
-
-/* + adds missing tokens required by home/about/legal */
-
-:root {
   --bg-primary: var(--bg-deep);
   --bg-secondary: #0e1512;
   --bg-elevated: var(--bg-surface);
@@ -67,8 +60,6 @@
   --transition-base: var(--speed-normal);
   --z-skip: 9999;
 }
-
-/* ── Font Face — Inter Variable (self-hosted) ── */
 
 /* ── Skip Link ── */
 
@@ -788,4 +779,3 @@ body {
     text-align: center;
   }
 }
-
