@@ -231,7 +231,7 @@
   function buildWhatsAppLink(course) {
     var phone   = getWhatsApp(course);
     var price   = course.price > 0
-      ? 'EGP ' + course.price.toFixed(2)
+      ? '$ ' + course.price.toFixed(2)
       : 'Free';
     var message = 'Hello, I want to purchase the course "' +
                   course.title + '" — Price: ' + price;
@@ -505,7 +505,7 @@
     });
 
     var isFree    = parseFloat(course.price) === 0;
-    var priceText = isFree ? 'Free' : 'EGP ' + parseFloat(course.price).toFixed(2);
+    var priceText = isFree ? 'Free' : '$ ' + parseFloat(course.price).toFixed(2);
 
     var priceEl = U.el('div', { className: 'price-display' }, [
       U.el('span', {
@@ -540,12 +540,12 @@
           rel:       'noopener noreferrer',
           aria: {
             label: 'Buy ' + course.title +
-                   ' for EGP ' + parseFloat(course.price).toFixed(2) +
+                   ' for $ ' + parseFloat(course.price).toFixed(2) +
                    ' via WhatsApp'
           }
         }, [
           U.el('i', { className: 'bi bi-whatsapp', aria: { hidden: 'true' } }),
-          ' Buy Now — EGP ' + parseFloat(course.price).toFixed(2)
+          ' Buy Now — $ ' + parseFloat(course.price).toFixed(2)
         ])
       );
 
@@ -765,5 +765,6 @@
   } else {
     init();
   }
+
 
 })();
