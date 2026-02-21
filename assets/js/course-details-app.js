@@ -231,7 +231,7 @@
   function buildWhatsAppLink(course) {
     var phone   = getWhatsApp(course);
     var price   = course.price > 0
-      ? '$ ' + course.price.toFixed(2)
+      ? '$' + course.price.toFixed(2)
       : 'Free';
     var message = 'Hello, I want to purchase the course "' +
                   course.title + '" — Price: ' + price;
@@ -281,11 +281,16 @@
     li3.appendChild(U.el('span', { textContent: course.title }));
     ol.appendChild(li3);
 
-    return U.el('nav', {
-      className: 'breadcrumb-nav',
-      aria:      { label: 'Breadcrumb' }
-    }, [ol]);
-  }
+  var nav = U.el('nav', {
+    className: 'breadcrumb-nav',
+    aria:      { label: 'Breadcrumb' },
+    style: {
+      direction: 'ltr',  // فرض LTR للـ breadcrumb
+    }
+  }, [ol]);
+
+  return nav;
+}
 
   /* ── Header ── */
 
@@ -293,7 +298,7 @@
     return U.el('header', { className: 'details-header' }, [
       U.el('div', { className: 'page-container' }, [
         U.el('a', { className: 'back-link', href: '../index.html' }, [
-          U.el('i', { className: 'bi bi-arrow-left', aria: { hidden: 'true' } }),
+          U.el('i', { className: 'bi bi-arrow-right', aria: { hidden: 'true' } }),
           'Back to Courses'
         ]),
         buildBreadcrumb(course),
@@ -353,7 +358,7 @@
 
     var summaryLine = U.el('p', {
       className:   'mb-3',
-      style:       { color: 'var(--text-muted)', fontSize: '0.85rem' },
+      style:       { color: 'var(--text-muted)', fontSize: '0.85rem', direction: 'ltr' },
       textContent: course.curriculum.length + ' sections • ' +
                    totalLessons + ' lessons • ' + durationText
     });
@@ -505,8 +510,7 @@
     });
 
     var isFree    = parseFloat(course.price) === 0;
-    var priceText = isFree ? 'Free' : '$ ' + parseFloat(course.price).toFixed(2);
-
+    var priceText = isFree ? 'Free' : '$' + parseFloat(course.price).toFixed(2);
     var priceEl = U.el('div', { className: 'price-display' }, [
       U.el('span', {
         className:   'price-current' + (isFree ? ' free' : ''),
@@ -540,12 +544,12 @@
           rel:       'noopener noreferrer',
           aria: {
             label: 'Buy ' + course.title +
-                   ' for $ ' + parseFloat(course.price).toFixed(2) +
+                   ' for EGP ' + parseFloat(course.price).toFixed(2) +
                    ' via WhatsApp'
           }
         }, [
           U.el('i', { className: 'bi bi-whatsapp', aria: { hidden: 'true' } }),
-          ' Buy Now — $ ' + parseFloat(course.price).toFixed(2)
+          ' Buy Now — $' + parseFloat(course.price).toFixed(2)
         ])
       );
 
@@ -765,6 +769,5 @@
   } else {
     init();
   }
-
 
 })();
