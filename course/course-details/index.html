@@ -118,6 +118,11 @@
       background:#151d19;border-radius:6px;
       animation:skeletonPulse 1.5s ease-in-out infinite;
     }
+
+    [dir="rtl"] .accordion-button::after {
+    margin-right: auto;
+    margin-left: 0;
+    }
   </style>
 
   <!-- Stylesheets -->
@@ -134,7 +139,7 @@
   <a href="#app" class="skip-link">Skip to main content</a>
 
   <!-- App container — all content built dynamically by course-details-app.js -->
-  <main id="app" aria-label="Course details"></main>
+  <main id="app" aria-label="Course details" dir="rtl"></main>
 
   <!-- Scripts — deferred, non-blocking -->
   <script src="../../assets/bootstrap/js/bootstrap.min.js"    defer></script>
