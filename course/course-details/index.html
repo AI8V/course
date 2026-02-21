@@ -69,7 +69,12 @@
   <!-- Preload Bootstrap CSS -->
   <link rel="preload" href="../../assets/bootstrap/css/bootstrap.min.css"
         as="style">
-
+  <style>
+    [dir="rtl"] .accordion-button::after {
+    margin-right: auto;
+    margin-left: 0;
+    }
+  </style>
   <!-- Critical CSS — loading skeleton before JS builds the page -->
   <style>
     :root{
@@ -117,11 +122,6 @@
     .skeleton-line{
       background:#151d19;border-radius:6px;
       animation:skeletonPulse 1.5s ease-in-out infinite;
-    }
-
-    [dir="rtl"] .accordion-button::after {
-    margin-right: auto;
-    margin-left: 0;
     }
   </style>
 
