@@ -72,54 +72,11 @@
 
   <!-- Critical CSS — loading skeleton before JS builds the page -->
   <style>
-    :root{
-      --bg-deep:#0a0f0d;--bg-card:#111916;--bg-surface:#151d19;
-      --bg-primary:#0a0f0d;--bg-elevated:#151d19;
-      --emerald-400:#34d399;--emerald-500:#10b981;--emerald-600:#059669;
-      --emerald-700:#047857;--teal-400:#2dd4bf;--teal-600:#0d9488;
-      --cyan-400:#22d3ee;
-      --text-primary:#f0fdf4;--text-secondary:#86efac;--text-muted:#6b7f75;
-      --em-400:#34d399;--em-500:#10b981;
-      --border-subtle:rgba(52,211,153,0.1);
-      --border-color:rgba(52,211,153,0.1);
-      --speed-fast:0.15s;--speed-normal:0.3s;
-      --ease-smooth:cubic-bezier(0.4,0,0.2,1);
-      --font-base:'Inter',system-ui,-apple-system,sans-serif;
-      --radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-xl:20px;
-    }
-    *,*::before,*::after{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      background:#0a0f0d;color:#f0fdf4;
-      font-family:'Inter',system-ui,-apple-system,sans-serif;
-      line-height:1.6;-webkit-font-smoothing:antialiased;
-      overflow-x:hidden;margin:0;min-height:100vh;
-    }
-    /* skip link */
-    .skip-link{
-      position:fixed;top:1rem;left:1rem;z-index:9999;
-      padding:.6rem 1.2rem;background:#10b981;color:#0a0f0d;
-      font-weight:700;font-size:.9rem;border-radius:12px;
-      text-decoration:none;transform:translateY(-150%);
-      transition:transform .15s;
-    }
-    .skip-link:focus-visible{transform:translateY(0)}
-    /* loading skeleton */
-    #app:empty::after{
-      content:'';display:block;
-      min-height:100vh;background:#0a0f0d;
-    }
-    /* skeleton pulse animation */
-    @keyframes skeletonPulse{
-      0%,100%{opacity:.4}
-      50%{opacity:.8}
-    }
-    .skeleton-line{
-      background:#151d19;border-radius:6px;
-      animation:skeletonPulse 1.5s ease-in-out infinite;
+    [dir="rtl"] .accordion-button::after {
+    margin-right: auto;
+    margin-left: 0;
     }
   </style>
-
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet"
