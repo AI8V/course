@@ -201,7 +201,7 @@
     if (line1)     line1.textContent     = 'Expand Your Skills,';
     if (gradient)  gradient.textContent  = 'Shape Your Future.';
     if (subtitle)  subtitle.textContent  =
-      'Expert-led courses in Development, Design, Health, Marketing and more. ' +
+      'Expert-led courses in Development, Marketing and more. ' +
       'Learn at your own pace with lifetime access and dedicated support.';
   }
 
@@ -407,3 +407,4 @@
   }
 
 })();
+
