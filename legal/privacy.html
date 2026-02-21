@@ -58,97 +58,6 @@
   <!-- Preload Bootstrap CSS -->
   <link rel="preload" href="../assets/bootstrap/css/bootstrap.min.css" as="style">
 
-  <!-- Critical CSS — Navbar + Page Header above-the-fold -->
-  <style>
-    :root{
-      --bg-deep:#0a0f0d;--bg-card:#111916;--bg-surface:#151d19;
-      --bg-primary:#0a0f0d;--bg-elevated:#151d19;
-      --emerald-400:#34d399;--emerald-500:#10b981;--emerald-600:#059669;
-      --emerald-700:#047857;--teal-600:#0d9488;
-      --text-primary:#f0fdf4;--text-secondary:#86efac;--text-muted:#6b7f75;
-      --em-400:#34d399;--em-500:#10b981;--em-600:#059669;--em-700:#047857;
-      --border-color:rgba(52,211,153,0.1);
-      --transition-fast:0.15s;--transition-base:0.3s;
-      --font-base:'Inter',system-ui,-apple-system,sans-serif;
-      --radius-md:12px;
-    }
-    *,*::before,*::after{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      background:#0a0f0d;color:#f0fdf4;
-      font-family:'Inter',system-ui,-apple-system,sans-serif;
-      line-height:1.6;-webkit-font-smoothing:antialiased;
-      overflow-x:hidden;margin:0;
-    }
-    .skip-link{
-      position:fixed;top:1rem;left:1rem;z-index:9999;
-      padding:.6rem 1.2rem;background:#10b981;color:#0a0f0d;
-      font-weight:700;font-size:.9rem;border-radius:12px;
-      text-decoration:none;transform:translateY(-150%);
-      transition:transform .15s;
-    }
-    .skip-link:focus-visible{transform:translateY(0)}
-    .legal-navbar{
-      background-color:rgba(10,15,13,.92);
-      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(52,211,153,.1);padding:.75rem 0;
-    }
-    .legal-brand{
-      display:flex;align-items:center;gap:.5rem;
-      text-decoration:none;font-weight:700;font-size:1.1rem;
-      color:#f0fdf4!important;
-    }
-    .legal-brand-icon{
-      display:flex;align-items:center;justify-content:center;
-      width:2rem;height:2rem;
-      background:linear-gradient(135deg,#059669,#0d9488);
-      border-radius:6px;color:#fff;font-size:1rem;
-    }
-    .legal-navbar .nav-link{
-      color:#86efac!important;font-size:.9rem;font-weight:500;
-      padding:.4rem .75rem!important;border-radius:6px;
-    }
-    .legal-btn-outline{
-      color:#34d399!important;border:1px solid #047857!important;
-      background:transparent!important;font-weight:600;border-radius:8px;
-    }
-    .legal-page-header{
-      position:relative;background-color:#0a0f0d;
-      padding:3.5rem 0 3rem;
-      border-bottom:1px solid rgba(52,211,153,.1);overflow:hidden;
-    }
-    .legal-header-glow{
-      position:absolute;top:-30%;right:-5%;width:500px;height:500px;
-      background:radial-gradient(ellipse,rgba(16,185,129,.07) 0%,transparent 65%);
-      pointer-events:none;
-    }
-    .legal-header-content{position:relative;z-index:1}
-    .legal-breadcrumb{
-      display:flex;align-items:center;gap:.4rem;
-      list-style:none;padding:0;margin:0;font-size:.82rem;
-    }
-    .legal-breadcrumb li{display:flex;align-items:center;color:#6b7f75}
-    .legal-breadcrumb a{color:#6b7f75;text-decoration:none}
-    .legal-breadcrumb li[aria-current="page"]{color:#34d399;font-weight:600}
-    .legal-header-badge{
-      display:inline-flex;align-items:center;
-      background:rgba(16,185,129,.08);
-      border:1px solid rgba(16,185,129,.2);
-      color:#34d399;font-size:.78rem;font-weight:600;
-      letter-spacing:.06em;text-transform:uppercase;
-      padding:.35rem 1rem;border-radius:20px;
-    }
-    .legal-header-title{
-      font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;
-      color:#f0fdf4;letter-spacing:-.02em;margin:.5rem 0 .75rem;
-    }
-    .legal-header-meta{
-      font-size:.85rem;color:#6b7f75;
-      display:flex;align-items:center;gap:.5rem;
-      flex-wrap:wrap;margin:0;
-    }
-  </style>
-
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet"
@@ -933,3 +842,4 @@
 
 </body>
 </html>
+
