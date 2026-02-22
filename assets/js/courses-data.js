@@ -155,7 +155,26 @@ var COURSE_DATA = (function () {
       answer: "أنت أول العملاء! 🎉 الأداة جديدة وقيمتها عالية جداً. كن من الأول."
     }
   ]
-}
+},
+    {
+      id: 2,
+      title: "Health Foundations - Complete Wellness Guide",
+      category: "Health",
+      level: "Beginner",
+      price: 49.00,
+      students: 510,
+      lessons: 13,
+      rating: 5,
+      date: "2025-07-15",
+      description: "Master the basics of health and wellness with practical tips and strategies.",
+      image: "example.png",
+      instructor: "Dr. Sarah Wilson",
+      tags: ["health", "wellness", "nutrition"],
+      driveUrl: "",
+      learningObjectives: sharedObjectives,
+      curriculum: sharedCurriculum,
+      faq: sharedFaq
+    }
   ];
 
   var categories = {
@@ -197,3 +216,4 @@ var COURSE_DATA = (function () {
 })();
 
 if (typeof window !== 'undefined') window.COURSE_DATA = COURSE_DATA;
+
