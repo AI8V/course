@@ -159,7 +159,7 @@ var COURSE_DATA = (function () {
     {
       id: 2,
       title: "Health Foundations - Complete Wellness Guide",
-      category: "Health",
+      category: "Business",
       level: "Beginner",
       price: 49.00,
       students: 510,
@@ -216,4 +216,5 @@ var COURSE_DATA = (function () {
 })();
 
 if (typeof window !== 'undefined') window.COURSE_DATA = COURSE_DATA;
+
 
