@@ -156,6 +156,7 @@ var COURSE_DATA = (function () {
     }
   ]
 },
+    /*
     {
       id: 2,
       title: "Health Foundations - Complete Wellness Guide",
@@ -289,12 +290,16 @@ var COURSE_DATA = (function () {
       curriculum: sharedCurriculum,
       faq: sharedFaq
     }
+    */
   ];
 
   var categories = {
     "Business":     { color: "emerald" },
     "Marketing":    { color: "emerald" },
-    "Design":       { color: "cyan"    },
+/*    "Photography":  { color: "teal"    },
+    "Health":       { color: "teal"    },
+    "IT":           { color: "cyan"    },
+    "Design":       { color: "cyan"    },*/
     "Developer":    { color: "emerald" }
   };
 
@@ -330,3 +335,4 @@ var COURSE_DATA = (function () {
 })();
 
 if (typeof window !== 'undefined') window.COURSE_DATA = COURSE_DATA;
+
