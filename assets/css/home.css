@@ -5,21 +5,6 @@
    ═══════════════════════════════════════════════════════════════ */
 
 /* ───────────────────────────────────────────
-   GLOBAL RESETS FOR HOME PAGE
-─────────────────────────────────────────── */
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-base);
-  overflow-x: hidden;
-}
-
-/* ───────────────────────────────────────────
    NAVBAR
 ─────────────────────────────────────────── */
 
@@ -811,35 +796,35 @@ body {
    RESPONSIVE
 ─────────────────────────────────────────── */
 
-/* ≤ 991px */
+/* ≤ 991.98px */
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
   .hero-section {
     min-height: 75vh;
     padding: 5rem 0 3rem;
   }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
   .home-section {
     padding: 4.5rem 0;
   }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
   .cta-section {
     padding: 4.5rem 0;
   }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
   .stat-item {
     flex: 1 1 140px;
     padding: 1.25rem 1rem;
   }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
   .stat-number {
     font-size: 1.6rem;
   }
@@ -942,4 +927,3 @@ body {
     gap: 0.4rem;
   }
 }
-

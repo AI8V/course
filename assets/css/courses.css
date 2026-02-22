@@ -5,6 +5,13 @@
 
 /* ── Font Face — Inter Variable (self-hosted) ── */
 
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/inter-variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 /* ── Variables ── */
 
 :root {
@@ -107,6 +114,12 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+}
+
+/* ── Shared Utility — Icon Accent Color ── */
+
+.icon-em-500 {
+  color: var(--em-500);
 }
 
 /* ── Page Container ── */

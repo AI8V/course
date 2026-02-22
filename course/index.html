@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark" data-bss-forced-theme="dark">
+<html lang="en" data-bs-theme="dark">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
   <!-- SEO — injected at runtime by courses-app.js from COURSE_DATA -->
-  <title id="page-title">Online Courses — Development, Design, Health &amp; More</title>
+  <title id="page-title">Ai8V | Mind &amp; Machine — Explore Courses</title>
   <meta name="description"
         id="page-desc"
         content="Explore our catalog of expert-led online courses in Development, Design, Health, Marketing and more. Filter by category, level or rating and start learning today.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" id="page-canonical" href="https://ttblabs.com/course/">
+  <link rel="canonical" id="page-canonical" href="https://ai8v.com/course/">
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         id="og-url"       content="https://ttblabs.com/course/">
-  <meta property="og:title"       id="og-title"     content="Online Courses — Development, Design, Health &amp; More">
+  <meta property="og:url"         id="og-url"       content="https://ai8v.com/course/">
+  <meta property="og:title"       id="og-title"     content="Ai8V | Mind &amp; Machine — Explore Courses">
   <meta property="og:description" id="og-desc"      content="Explore expert-led online courses. Filter by category, level or rating and start learning today.">
-  <meta property="og:image"       id="og-image"     content="https://ttblabs.com/assets/img/og-image.png">
-  <meta property="og:site_name"   id="og-site-name" content="TTB Labs">
+  <meta property="og:image"       id="og-image"     content="https://ai8v.com/assets/img/og-image.png">
+  <meta property="og:site_name"   id="og-site-name" content="Ai8V | Mind &amp; Machine">
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       id="tw-title" content="Online Courses — Development, Design, Health &amp; More">
+  <meta name="twitter:title"       id="tw-title" content="Ai8V | Mind &amp; Machine — Explore Courses">
   <meta name="twitter:description" id="tw-desc"  content="Explore expert-led online courses. Filter by category, level or rating and start learning today.">
-  <meta name="twitter:image"       id="tw-image" content="https://ttblabs.com/assets/img/og-image.png">
+  <meta name="twitter:image"       id="tw-image" content="https://ai8v.com/assets/img/og-image.png">
 
   <!-- hreflang -->
-  <link rel="alternate" hreflang="en" href="https://ttblabs.com/course/">
+  <link rel="alternate" hreflang="en" id="hreflang-en" href="https://ai8v.com/course/">
 
   <!-- CSP — font-src 'self' for Inter self-hosted -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'none';
-                 script-src 'self' 'unsafe-inline';
+                 script-src 'self';
                  style-src 'self' https://cdnjs.cloudflare.com;
                  font-src 'self' https://cdnjs.cloudflare.com;
                  img-src 'self' data:;
@@ -54,9 +54,6 @@
   <!-- Preload critical font — path from /course/ -->
   <link rel="preload" href="../assets/fonts/inter-variable.woff2"
         as="font" type="font/woff2" crossorigin="anonymous">
-
-  <!-- Preload Bootstrap CSS -->
-  <link rel="preload" href="../assets/bootstrap/css/bootstrap.min.css" as="style">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
@@ -137,6 +134,7 @@
         </div>
 
         <!-- Courses grid -->
+        <h2 class="visually-hidden" id="courses-list-heading">Course Results</h2>
         <div id="courses-grid"
              class="row g-4"
              aria-live="polite"

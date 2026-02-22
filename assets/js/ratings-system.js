@@ -11,7 +11,7 @@
  * IP detection is handled server-side by the Worker (CF-Connecting-IP).
  *
  * Dependencies: Utils (window.Utils)
- * Exports: window.RatingSystem (frozen)
+ * Exports: window.RatingSystem (frozen) or null if Utils is missing
  */
 
 var RatingSystem = (function () {
@@ -19,7 +19,7 @@ var RatingSystem = (function () {
   var U = window.Utils;
   if (!U) {
     console.error('RatingSystem: Utils not found.');
-    return Object.freeze({});
+    return null;
   }
 
   /* ── Configuration ── */
@@ -81,10 +81,12 @@ var RatingSystem = (function () {
    * @param {string} url
    * @param {object} options - fetch options
    * @param {number} attempt - current attempt number (0-indexed)
+   * @param {number} maxRetries - maximum number of attempts (default: CONFIG.MAX_RETRIES)
    * @returns {Promise<Response>}
    */
-  function _fetchWithRetry(url, options, attempt) {
+  function _fetchWithRetry(url, options, attempt, maxRetries) {
     attempt = attempt || 0;
+    maxRetries = (maxRetries !== undefined) ? maxRetries : CONFIG.MAX_RETRIES;
 
     return new Promise(function (resolve, reject) {
       var controller = new AbortController();
@@ -107,10 +109,10 @@ var RatingSystem = (function () {
         .then(resolve)
         .catch(function (err) {
           clearTimeout(timeoutId);
-          if (attempt < CONFIG.MAX_RETRIES - 1) {
+          if (attempt < maxRetries - 1) {
             var delay = CONFIG.RETRY_DELAYS[attempt] || 4000;
             setTimeout(function () {
-              _fetchWithRetry(url, options, attempt + 1).then(resolve).catch(reject);
+              _fetchWithRetry(url, options, attempt + 1, maxRetries).then(resolve).catch(reject);
             }, delay);
           } else {
             reject(err);
@@ -151,6 +153,7 @@ var RatingSystem = (function () {
   /**
    * Submit a new rating for a course.
    * IP is injected server-side by the Cloudflare Worker.
+   * No retries — POST is not idempotent (server-side IP dedup mitigates but does not eliminate risk).
    *
    * @param {number} courseId
    * @param {number} ratingValue - 1 to 5
@@ -160,7 +163,10 @@ var RatingSystem = (function () {
     // Validate rating
     ratingValue = parseInt(ratingValue, 10);
     if (isNaN(ratingValue) || ratingValue < CONFIG.MIN_RATING || ratingValue > CONFIG.MAX_RATING) {
-      return Promise.reject(new Error('Invalid rating value: must be between 1 and 5'));
+      return Promise.resolve({
+        status: 'error',
+        message: 'Invalid rating value: must be between 1 and 5'
+      });
     }
 
     var body = JSON.stringify({
@@ -172,7 +178,7 @@ var RatingSystem = (function () {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: body
-    }).then(function (data) {
+    }, 0, 1).then(function (data) {
       if (data.status === 'success') {
         // Clear cache so next fetch gets fresh data
         _clearCache(courseId);
@@ -375,4 +381,4 @@ var RatingSystem = (function () {
 
 })();
 
-if (typeof window !== 'undefined') window.RatingSystem = RatingSystem;
+if (typeof window !== 'undefined' && RatingSystem) window.RatingSystem = RatingSystem;

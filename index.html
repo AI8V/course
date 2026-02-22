@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark" data-bss-forced-theme="dark">
+<html lang="en" data-bs-theme="dark">
 
 <head>
   <meta charset="utf-8">
@@ -10,34 +10,34 @@
     Static fallback values here — home-app.js injects
     final values from COURSE_DATA at runtime.
   -->
-  <title id="page-title">Online Courses — Learn. Build. Grow.</title>
+  <title id="page-title">Ai8V | Mind &amp; Machine — Online Courses</title>
   <meta name="description"
         id="page-desc"
         content="Expert-led online courses in Development, Marketing and more. Learn at your own pace with lifetime access.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" id="page-canonical" href="https://ttblabs.com/">
+  <link rel="canonical" id="page-canonical" href="https://ai8v.com/">
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         id="og-url"         content="https://ttblabs.com/">
-  <meta property="og:title"       id="og-title"       content="Online Courses — Learn. Build. Grow.">
+  <meta property="og:url"         id="og-url"         content="https://ai8v.com/">
+  <meta property="og:title"       id="og-title"       content="Ai8V | Mind &amp; Machine — Online Courses">
   <meta property="og:description" id="og-desc"        content="Expert-led online courses in Development, Marketing and more.">
-  <meta property="og:image"       id="og-image"       content="https://ttblabs.com/assets/img/og-image.png">
-  <meta property="og:site_name"   id="og-site-name"   content="TTB Labs">
+  <meta property="og:image"       id="og-image"       content="https://ai8v.com/assets/img/og-image.png">
+  <meta property="og:site_name"   id="og-site-name"   content="Ai8V | Mind &amp; Machine">
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       id="tw-title"  content="Online Courses — Learn. Build. Grow.">
+  <meta name="twitter:title"       id="tw-title"  content="Ai8V | Mind &amp; Machine — Online Courses">
   <meta name="twitter:description" id="tw-desc"   content="Expert-led online courses in Development, Marketing and more.">
-  <meta name="twitter:image"       id="tw-image"  content="https://ttblabs.com/assets/img/og-image.png">
+  <meta name="twitter:image"       id="tw-image"  content="https://ai8v.com/assets/img/og-image.png">
 
   <!-- hreflang -->
-  <link rel="alternate" hreflang="en" href="https://ttblabs.com/">
+  <link rel="alternate" hreflang="en" id="hreflang-en" href="https://ai8v.com/">
 
   <!-- CSP -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'none';
-                 script-src 'self' 'unsafe-inline';
+                 script-src 'self';
                  style-src 'self' https://cdnjs.cloudflare.com;
                  font-src 'self' https://cdnjs.cloudflare.com;
                  img-src 'self' data:;
@@ -58,9 +58,6 @@
   <!-- Preload critical font -->
   <link rel="preload" href="assets/fonts/inter-variable.woff2"
         as="font" type="font/woff2" crossorigin="anonymous">
-
-  <!-- Preload Bootstrap CSS -->
-  <link rel="preload" href="assets/bootstrap/css/bootstrap.min.css" as="style">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -95,7 +92,7 @@
               data-bs-toggle="collapse" data-bs-target="#mainNav"
               aria-controls="mainNav" aria-expanded="false"
               aria-label="Toggle navigation">
-        <i class="bi bi-list fs-4" style="color:var(--em-500);" aria-hidden="true"></i>
+        <i class="bi bi-list fs-4 icon-em-500" aria-hidden="true"></i>
       </button>
 
       <!-- Links -->
@@ -284,7 +281,7 @@
           <!-- Step 3 -->
           <div class="col-12 col-md-4">
             <article class="how-card h-100">
-              <div class="how-step-number" aria-hidden="true">03</div>
+              <div class="how-step-number" aria-hidden="true">01</div>
               <div class="how-icon mb-3" aria-hidden="true">
                 <i class="bi bi-play-circle-fill" aria-hidden="true"></i>
               </div>
@@ -346,8 +343,7 @@
         <!-- Brand col -->
         <div class="col-12 col-md-4">
           <div class="footer-brand mb-3">
-            <i class="bi bi-cpu-fill me-2"
-               style="color:var(--em-500);" aria-hidden="true"></i>
+            <i class="bi bi-cpu-fill me-2 icon-em-500" aria-hidden="true"></i>
             <span id="footer-brand-name"></span>
           </div>
           <p class="footer-tagline">
@@ -363,7 +359,7 @@
 
         <!-- Quick Links -->
         <div class="col-6 col-md-2 offset-md-1">
-          <h4 class="footer-col-title">Platform</h4>
+          <p class="footer-col-title">Platform</p>
           <ul class="footer-links">
             <li><a href="./index.html">Home</a></li>
             <li><a href="./course/">All Courses</a></li>
@@ -373,7 +369,7 @@
 
         <!-- Categories — built dynamically -->
         <div class="col-6 col-md-2">
-          <h4 class="footer-col-title">Categories</h4>
+          <p class="footer-col-title">Categories</p>
           <ul class="footer-links" id="footer-categories">
             <!-- built by home-app.js -->
           </ul>
@@ -381,7 +377,7 @@
 
         <!-- Legal -->
         <div class="col-6 col-md-2">
-          <h4 class="footer-col-title">Legal</h4>
+          <p class="footer-col-title">Legal</p>
           <ul class="footer-links">
             <li><a href="./legal/privacy.html">Privacy Policy</a></li>
             <li><a href="./legal/terms.html">Terms of Use</a></li>
@@ -410,5 +406,3 @@
 
 </body>
 </html>
-
-

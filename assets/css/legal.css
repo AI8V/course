@@ -6,21 +6,6 @@
    ═══════════════════════════════════════════════════════════════ */
 
 /* ───────────────────────────────────────────
-   BASE
-─────────────────────────────────────────── */
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-base);
-  overflow-x: hidden;
-}
-
-/* ───────────────────────────────────────────
    NAVBAR
 ─────────────────────────────────────────── */
 
@@ -648,7 +633,7 @@ body {
    RESPONSIVE
 ─────────────────────────────────────────── */
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
   .legal-layout {
     padding-top: 2.5rem;
     padding-bottom: 4rem;
@@ -722,4 +707,3 @@ body {
     padding: 1.1rem;
   }
 }
-

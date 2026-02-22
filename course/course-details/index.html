@@ -1,52 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark" data-bss-forced-theme="dark">
+<html lang="ar" dir="rtl" data-bs-theme="dark">
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <style>
     [dir="rtl"] .accordion-button::after {
     margin-right: auto;
     margin-left: 0;
     }
   </style>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
   <!--
     SEO: title + description + canonical + OG + Twitter
     Fallback values here — course-details-app.js injects
     final per-course values from COURSE_DATA at runtime.
   -->
-  <title id="page-title">Course Details — Online Learning Platform</title>
+  <title id="page-title">Course Details — Ai8V | Mind &amp; Machine</title>
   <meta name="description"
         id="page-desc"
         content="Explore this expert-led online course. Learn at your own pace with lifetime access and dedicated support.">
   <meta name="robots" id="page-robots" content="index, follow">
   <link rel="canonical" id="page-canonical"
-        href="https://ttblabs.com/course/course-details/">
+        href="https://ai8v.com/course/course-details/">
 
   <!-- Open Graph -->
   <meta property="og:type"        content="article">
-  <meta property="og:url"         id="og-url"       content="https://ttblabs.com/course/course-details/">
-  <meta property="og:title"       id="og-title"     content="Course Details — Online Learning Platform">
+  <meta property="og:url"         id="og-url"       content="https://ai8v.com/course/course-details/">
+  <meta property="og:title"       id="og-title"     content="Course Details — Ai8V | Mind &amp; Machine">
   <meta property="og:description" id="og-desc"      content="Explore this expert-led online course. Learn at your own pace with lifetime access.">
-  <meta property="og:image"       id="og-image"     content="https://ttblabs.com/assets/img/og-image.png">
-  <meta property="og:site_name"   id="og-site-name" content="TTB Labs">
+  <meta property="og:image"       id="og-image"     content="https://ai8v.com/assets/img/og-image.png">
+  <meta property="og:site_name"   id="og-site-name" content="Ai8V | Mind &amp; Machine">
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       id="tw-title" content="Course Details — Online Learning Platform">
+  <meta name="twitter:title"       id="tw-title" content="Course Details — Ai8V | Mind &amp; Machine">
   <meta name="twitter:description" id="tw-desc"  content="Explore this expert-led online course. Learn at your own pace with lifetime access.">
-  <meta name="twitter:image"       id="tw-image" content="https://ttblabs.com/assets/img/og-image.png">
+  <meta name="twitter:image"       id="tw-image" content="https://ai8v.com/assets/img/og-image.png">
 
   <!-- hreflang — updated per-course by JS -->
   <link rel="alternate" hreflang="en" id="hreflang-en"
-        href="https://ttblabs.com/course/course-details/">
+        href="https://ai8v.com/course/course-details/">
 
   <!-- CSP — font-src 'self' for Inter self-hosted -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'none';
-                 script-src 'self' 'unsafe-inline';
-                 style-src 'self' https://cdnjs.cloudflare.com;
+                 script-src 'self';
+                 style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
                  font-src 'self' https://cdnjs.cloudflare.com;
                  img-src 'self' data:;
                  connect-src 'self';
@@ -72,10 +72,6 @@
   <link rel="preload" href="../../assets/fonts/inter-variable.woff2"
         as="font" type="font/woff2" crossorigin="anonymous">
 
-  <!-- Preload Bootstrap CSS -->
-  <link rel="preload" href="../../assets/bootstrap/css/bootstrap.min.css"
-        as="style">
-
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet"
@@ -90,7 +86,22 @@
   <a href="#app" class="skip-link">Skip to main content</a>
 
   <!-- App container — all content built dynamically by course-details-app.js -->
-  <main id="app" aria-label="Course details" dir="rtl"></main>
+  <main id="app" aria-label="Course details">
+    <noscript>
+      <div style="text-align:center; padding:4rem 1rem; color:#86efac;">
+        <p style="font-size:1.2rem; font-weight:700;">
+          JavaScript Required
+        </p>
+        <p style="color:#6b7f75;">
+          Please enable JavaScript to view course details.
+        </p>
+        <a href="../../course/"
+           style="color:#34d399; text-decoration:underline;">
+          ← Back to Courses
+        </a>
+      </div>
+    </noscript>
+  </main>
 
   <!-- Scripts — deferred, non-blocking -->
   <script src="../../assets/bootstrap/js/bootstrap.min.js"    defer></script>

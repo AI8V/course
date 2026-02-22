@@ -17,12 +17,6 @@
   var BRAND_NAME = DATA.BRAND_NAME || 'Ai8V';
   var DOMAIN     = DATA.DOMAIN     || 'ai8v.com';
 
-  function getWhatsApp(course) {
-    return (course.teacherPhone && String(course.teacherPhone).trim())
-      ? String(course.teacherPhone).trim()
-      : (DATA.WHATSAPP_NUMBER || '1234567890');
-  }
-
   /* ── Course Lookup ── */
 
   function getCourseIdFromURL() {
@@ -42,31 +36,7 @@
     return null;
   }
 
-  /* ── Meta (legacy — kept for fallback) ── */
-
-  function updateMeta(course) {
-    document.title = course.title + ' | ' + BRAND_NAME;
-    var metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute('content', course.description);
-    _setMetaProperty('og:title',       course.title + ' | ' + BRAND_NAME);
-    _setMetaProperty('og:description', course.description);
-    _setMetaProperty('og:type',        'website');
-    _setMetaProperty('og:url',         window.location.href);
-    _setMetaProperty('og:image',
-      window.location.origin + '/assets/img/' + course.image);
-  }
-
-  function _setMetaProperty(property, content) {
-    var el = document.querySelector('meta[property="' + property + '"]');
-    if (!el) {
-      el = document.createElement('meta');
-      el.setAttribute('property', property);
-      document.head.appendChild(el);
-    }
-    el.setAttribute('content', content);
-  }
-
-  /* ── SEO Injection (v8.0) ── */
+  /* ── SEO Injection ── */
 
   function injectSEO(course) {
     var brand    = DATA.BRAND_NAME;
@@ -78,18 +48,14 @@
     var pageDesc  = course.description + ' ' + meta.descriptionShort;
     var pageImage = base + '/assets/img/' + course.image;
 
-    // title
     document.title = pageTitle;
 
-    // meta description
     var descEl = document.getElementById('page-desc');
     if (descEl) descEl.setAttribute('content', pageDesc);
 
-    // canonical
     var canonEl = document.getElementById('page-canonical');
     if (canonEl) canonEl.setAttribute('href', pageUrl);
 
-    // OG
     var ogMap = {
       'og-url':       pageUrl,
       'og-title':     pageTitle,
@@ -102,7 +68,6 @@
       if (el) el.setAttribute('content', ogMap[id]);
     });
 
-    // Twitter
     var twMap = {
       'tw-title': pageTitle,
       'tw-desc':  pageDesc,
@@ -113,11 +78,9 @@
       if (el) el.setAttribute('content', twMap[id]);
     });
 
-    // hreflang
     var hreflang = document.getElementById('hreflang-en');
     if (hreflang) hreflang.setAttribute('href', pageUrl);
 
-    // JSON-LD — Course schema
     var schema = {
       '@context': 'https://schema.org',
       '@type':    'Course',
@@ -130,7 +93,7 @@
         'url':   base
       },
       'educationalLevel': course.level,
-      'inLanguage':       'en',
+      'inLanguage':       course.language || 'en',
       'offers': {
         '@type':        'Offer',
         'price':        course.price,
@@ -138,16 +101,6 @@
         'availability': 'https://schema.org/InStock'
       }
     };
-
-    if (course.rating > 0) {
-      schema.aggregateRating = {
-        '@type':       'AggregateRating',
-        'ratingValue': course.rating,
-        'bestRating':  5,
-        'worstRating': 1,
-        'ratingCount': course.students
-      };
-    }
 
     var script       = document.createElement('script');
     script.type      = 'application/ld+json';
@@ -170,9 +123,11 @@
     }
   }
 
-  /* ── JSON-LD (legacy — kept for BreadcrumbList + FAQPage) ── */
+  /* ── JSON-LD (BreadcrumbList + FAQPage) ── */
 
   function buildSchema(course) {
+    var base    = 'https://' + DATA.DOMAIN;
+    var pageUrl = base + '/course/course-details/?id=' + course.id;
     var schemas = [];
 
     schemas.push({
@@ -180,11 +135,11 @@
       '@type':      'BreadcrumbList',
       'itemListElement': [
         { '@type': 'ListItem', 'position': 1,
-          'name': 'Home',    'item': window.location.origin + '/' },
+          'name': 'Home',    'item': base + '/' },
         { '@type': 'ListItem', 'position': 2,
-          'name': 'Courses', 'item': window.location.origin + '/course/' },
+          'name': 'Courses', 'item': base + '/course/' },
         { '@type': 'ListItem', 'position': 3,
-          'name': course.title, 'item': window.location.href }
+          'name': course.title, 'item': pageUrl }
       ]
     });
 
@@ -220,6 +175,7 @@
         '@type':       'AggregateRating',
         'ratingValue': average.toFixed(1),
         'bestRating':  '5',
+        'worstRating': '1',
         'ratingCount': String(count)
       };
       el.textContent = JSON.stringify(schema);
@@ -229,7 +185,7 @@
   /* ── WhatsApp Link ── */
 
   function buildWhatsAppLink(course) {
-    var phone   = getWhatsApp(course);
+    var phone   = DATA.WHATSAPP_NUMBER || '';
     var price   = course.price > 0
       ? '$' + course.price.toFixed(2)
       : 'Free';
@@ -281,21 +237,22 @@
     li3.appendChild(U.el('span', { textContent: course.title }));
     ol.appendChild(li3);
 
-  var nav = U.el('nav', {
-    className: 'breadcrumb-nav',
-    aria:      { label: 'Breadcrumb' },
-    style: {
-      direction: 'ltr',  // فرض LTR للـ breadcrumb
-    }
-  }, [ol]);
+    var nav = U.el('nav', {
+      className: 'breadcrumb-nav',
+      aria:      { label: 'Breadcrumb' },
+      style:     { direction: 'ltr' }
+    }, [ol]);
 
-  return nav;
-}
+    return nav;
+  }
 
   /* ── Header ── */
 
   function buildHeader(course) {
-    return U.el('header', { className: 'details-header' }, [
+    return U.el('header', {
+      className: 'details-header',
+      style:     { paddingTop: '0.5rem' }
+    }, [
       U.el('div', { className: 'page-container' }, [
         U.el('a', { className: 'back-link', href: '../index.html' }, [
           U.el('i', { className: 'bi bi-arrow-right', aria: { hidden: 'true' } }),
@@ -304,6 +261,18 @@
         buildBreadcrumb(course),
         U.el('h1', { className: 'page-title', textContent: course.title })
       ])
+    ]);
+  }
+
+  /* ── Section Title Helper (LTR: icon then text, aligned left) ── */
+
+  function _buildSectionTitle(iconClass, titleText) {
+    return U.el('h2', {
+      className: 'details-section-title',
+      style:     { direction: 'ltr', textAlign: 'left' }
+    }, [
+      U.el('i', { className: iconClass, aria: { hidden: 'true' } }),
+      titleText
     ]);
   }
 
@@ -324,10 +293,7 @@
       className: 'details-section',
       aria:      { label: 'What you will learn' }
     }, [
-      U.el('h2', { className: 'details-section-title' }, [
-        U.el('i', { className: 'bi bi-lightbulb', aria: { hidden: 'true' } }),
-        "What You'll Learn"
-      ]),
+      _buildSectionTitle('bi bi-lightbulb', "What You'll Learn"),
       list
     ]);
   }
@@ -358,7 +324,7 @@
 
     var summaryLine = U.el('p', {
       className:   'mb-3',
-      style:       { color: 'var(--text-muted)', fontSize: '0.85rem', direction: 'ltr' },
+      style:       { color: 'var(--text-muted)', fontSize: '0.85rem', direction: 'ltr', textAlign: 'left' },
       textContent: course.curriculum.length + ' sections • ' +
                    totalLessons + ' lessons • ' + durationText
     });
@@ -389,12 +355,17 @@
         className: 'accordion-button' + (sIdx === 0 ? '' : ' collapsed'),
         type:      'button',
         dataset:   { bsToggle: 'collapse', bsTarget: '#' + bodyId },
-        aria:      { expanded: sIdx === 0 ? 'true' : 'false', controls: bodyId }
+        aria:      { expanded: sIdx === 0 ? 'true' : 'false', controls: bodyId },
+        style:     { display: 'flex', justifyContent: 'space-between', alignItems: 'center' }
       });
-      btn.appendChild(U.el('span', { textContent: section.title }));
+      btn.appendChild(U.el('span', {
+        textContent: section.title,
+        style:       { textAlign: 'right', flex: '1' }
+      }));
       btn.appendChild(U.el('span', {
         className:   'curriculum-section-meta',
-        textContent: sectionLessons + ' lessons • ' + sectionDurMin + ' min'
+        textContent: sectionLessons + ' lessons • ' + sectionDurMin + ' min',
+        style:       { direction: 'ltr', whiteSpace: 'nowrap', marginLeft: '0', marginRight: 'auto', paddingLeft: '0.5rem' }
       }));
 
       var header = U.el('h2', { className: 'accordion-header', id: headerId });
@@ -438,10 +409,7 @@
       className: 'details-section',
       aria:      { label: 'Course curriculum' }
     }, [
-      U.el('h2', { className: 'details-section-title' }, [
-        U.el('i', { className: 'bi bi-journal-text', aria: { hidden: 'true' } }),
-        'Curriculum'
-      ]),
+      _buildSectionTitle('bi bi-journal-text', 'Curriculum'),
       summaryLine,
       accordion
     ]);
@@ -490,10 +458,7 @@
       className: 'details-section',
       aria:      { label: 'Frequently asked questions' }
     }, [
-      U.el('h2', { className: 'details-section-title' }, [
-        U.el('i', { className: 'bi bi-question-circle', aria: { hidden: 'true' } }),
-        'Frequently Asked Questions'
-      ]),
+      _buildSectionTitle('bi bi-question-circle', 'Frequently Asked Questions'),
       accordion
     ]);
   }
@@ -518,7 +483,10 @@
       })
     ]);
 
-    var buttonsWrapper = U.el('div', { className: 'sidebar-buttons' });
+    var buttonsWrapper = U.el('div', {
+      className: 'sidebar-buttons',
+      style:     { direction: 'ltr' }
+    });
 
     if (isFree) {
       var driveUrl = U.sanitizeUrl(course.driveUrl || '');
@@ -544,7 +512,7 @@
           rel:       'noopener noreferrer',
           aria: {
             label: 'Buy ' + course.title +
-                   ' for EGP ' + parseFloat(course.price).toFixed(2) +
+                   ' for $' + parseFloat(course.price).toFixed(2) +
                    ' via WhatsApp'
           }
         }, [
@@ -565,7 +533,10 @@
       );
     }
 
-    var metaList = U.el('ul', { className: 'course-meta-list' });
+    var metaList = U.el('ul', {
+      className: 'course-meta-list',
+      style:     { direction: 'ltr' }
+    });
     metaList.appendChild(_buildMetaItem('bi-person-fill',    'Instructor', course.instructor));
     metaList.appendChild(_buildMetaItem('bi-tag-fill',       'Category',   course.category));
     metaList.appendChild(_buildMetaItem('bi-bar-chart-fill', 'Level',      course.level));
@@ -667,6 +638,17 @@
           if (firstStar) firstStar.setAttribute('tabindex', '0');
         }
       }
+    }).catch(function () {
+      if (statusEl) {
+        statusEl.textContent = 'Connection error. Please try again.';
+        statusEl.className = 'rating-status error';
+      }
+      if (interactiveContainer) {
+        interactiveContainer.classList.remove('stars-disabled');
+        interactiveContainer.querySelectorAll('.star-btn').forEach(function (s) { s.disabled = false; });
+        var firstStar = interactiveContainer.querySelector('.star-btn');
+        if (firstStar) firstStar.setAttribute('tabindex', '0');
+      }
     });
   }
 
@@ -715,7 +697,6 @@
   /* ── Page Builder ── */
 
   function buildPage(course, container) {
-    updateMeta(course);
     buildSchema(course);
 
     var frag          = document.createDocumentFragment();

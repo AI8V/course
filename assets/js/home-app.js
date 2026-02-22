@@ -2,24 +2,30 @@
 
 /* ═══════════════════════════════════════════════════════════════
    home-app.js — Logic for index.html
-   Depends on: COURSE_DATA (courses-data.js), Utils (utils.js)
+   Depends on: Utils (utils.js), COURSE_DATA (courses-data.js)
+   Uses Utils (aliased U) for all DOM construction and security.
    NO innerHTML for dynamic content — DOM API only.
    ═══════════════════════════════════════════════════════════════ */
 
 (function () {
 
   /* ─────────────────────────────────────────
+     GUARD CLAUSE & ALIASES
+  ───────────────────────────────────────── */
+
+  var U    = window.Utils;
+  var DATA = window.COURSE_DATA;
+
+  if (!U || !DATA) {
+    console.error('home-app: dependencies missing.');
+    return;
+  }
+
+  /* ─────────────────────────────────────────
      CONSTANTS
   ───────────────────────────────────────── */
 
   var FEATURED_COUNT = 3;
-
-  var STATS = [
-    { icon: 'bi-journal-bookmark-fill', number: '8+',    label: 'Courses Available' },
-    { icon: 'bi-people-fill',           number: '3,300+', label: 'Students Enrolled' },
-    { icon: 'bi-star-fill',             number: '4.2',   label: 'Average Rating'    },
-    { icon: 'bi-award-fill',            number: '100%',  label: 'Satisfaction Rate' }
-  ];
 
   var CATEGORY_ICONS = {
     'Business':    'bi-briefcase-fill',
@@ -32,17 +38,37 @@
   };
 
   /* ─────────────────────────────────────────
+     COMPUTED STATS
+  ───────────────────────────────────────── */
+
+  var courseCount   = DATA.courses.length;
+  var totalStudents = DATA.courses.reduce(function (s, c) { return s + c.students; }, 0);
+  var ratedCourses  = DATA.courses.filter(function (c) { return c.rating > 0; });
+  var avgRating     = ratedCourses.length > 0
+    ? (ratedCourses.reduce(function (s, c) { return s + c.rating; }, 0) / ratedCourses.length)
+    : 0;
+
+  var STATS = [
+    { icon: 'bi-journal-bookmark-fill', number: U.formatNumber(courseCount),   label: 'Courses Available' },
+    { icon: 'bi-people-fill',           number: U.formatNumber(totalStudents), label: 'Students Enrolled' },
+    { icon: 'bi-star-fill',             number: avgRating > 0 ? avgRating.toFixed(1) : '0', label: 'Average Rating' },
+    { icon: 'bi-award-fill',            number: ratedCourses.length > 0 ? '100%' : '0%',   label: 'Satisfaction Rate' }
+  ];
+
+  /* ─────────────────────────────────────────
      HELPERS
   ───────────────────────────────────────── */
 
-  function el(tag, classes, text) {
-    var node = document.createElement(tag);
-    if (classes) {
-      var list = Array.isArray(classes) ? classes : [classes];
-      list.forEach(function (c) { if (c) node.classList.add(c); });
-    }
-    if (text !== undefined) node.textContent = text;
-    return node;
+  function getWhatsAppMessage() {
+    return (DATA.META && DATA.META.whatsappDefaultMessage)
+      ? DATA.META.whatsappDefaultMessage
+      : 'Hello! I have a question about your courses.';
+  }
+
+  function getLogoPath() {
+    return (DATA.META && DATA.META.logoPath)
+      ? DATA.META.logoPath
+      : '/assets/img/fav180.png';
   }
 
   function buildWhatsAppUrl(phone, message) {
@@ -66,14 +92,14 @@
   }
 
   function getFeaturedCourses() {
-    return COURSE_DATA.courses.slice().sort(function (a, b) {
+    return DATA.courses.slice().sort(function (a, b) {
       return new Date(b.date) - new Date(a.date);
     }).slice(0, FEATURED_COUNT);
   }
 
   function getCategoriesWithCount() {
     var map = {};
-    COURSE_DATA.courses.forEach(function (c) {
+    DATA.courses.forEach(function (c) {
       map[c.category] = (map[c.category] || 0) + 1;
     });
     return map;
@@ -82,24 +108,22 @@
   function buildStarFragment(rating) {
     var frag = document.createDocumentFragment();
     for (var i = 1; i <= 5; i++) {
-      var star = document.createElement('i');
-      star.setAttribute('aria-hidden', 'true');
-      star.className = rating >= i
+      var cls = rating >= i
         ? 'bi bi-star-fill'
         : rating >= i - 0.5 ? 'bi bi-star-half' : 'bi bi-star';
-      frag.appendChild(star);
+      frag.appendChild(U.el('i', { className: cls, aria: { hidden: 'true' } }));
     }
     return frag;
   }
 
   /* ─────────────────────────────────────────
-     SEO INJECTION — from COURSE_DATA
+     SEO INJECTION — from DATA
   ───────────────────────────────────────── */
 
   function injectSEO() {
-    var brand  = COURSE_DATA.BRAND_NAME;
-    var domain = COURSE_DATA.DOMAIN;
-    var meta   = COURSE_DATA.META;
+    var brand  = DATA.BRAND_NAME;
+    var domain = DATA.DOMAIN;
+    var meta   = DATA.META;
     var base   = 'https://' + domain;
 
     var pageTitle = brand + ' — ' + meta.tagline;
@@ -127,8 +151,8 @@
       'og-site-name': brand
     };
     Object.keys(ogMap).forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.setAttribute('content', ogMap[id]);
+      var node = document.getElementById(id);
+      if (node) node.setAttribute('content', ogMap[id]);
     });
 
     /* Twitter Card */
@@ -138,13 +162,26 @@
       'tw-image': pageImage
     };
     Object.keys(twMap).forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.setAttribute('content', twMap[id]);
+      var node = document.getElementById(id);
+      if (node) node.setAttribute('content', twMap[id]);
     });
 
     /* hreflang */
-    var hreflang = document.querySelector('link[rel="alternate"][hreflang="en"]');
+    var hreflang = document.getElementById('hreflang-en');
+    if (!hreflang) {
+      hreflang = document.querySelector('link[rel="alternate"][hreflang="en"]');
+    }
     if (hreflang) hreflang.setAttribute('href', pageUrl);
+
+    /* aria-current="page" on Home nav link */
+    U.qsa('.nav-link').forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (href && (href === '/' || href === './' ||
+          href.indexOf('index.html') !== -1) &&
+          href.indexOf('course') === -1) {
+        link.setAttribute('aria-current', 'page');
+      }
+    });
 
     /* JSON-LD — WebSite + Organization */
     var schema = {
@@ -170,7 +207,7 @@
           '@id': base + '/#organization',
           'name': brand,
           'url': base,
-          'logo': base + '/assets/img/fav180.png',
+          'logo': base + getLogoPath(),
           'foundingDate': meta.foundingYear,
           'contactPoint': {
             '@type': 'ContactPoint',
@@ -197,7 +234,7 @@
     var subtitle = document.getElementById('hero-subtitle');
     var navBrand = document.getElementById('nav-brand-name');
 
-    if (navBrand)  navBrand.textContent  = COURSE_DATA.BRAND_NAME;
+    if (navBrand)  navBrand.textContent  = DATA.BRAND_NAME;
     if (line1)     line1.textContent     = 'Expand Your Skills,';
     if (gradient)  gradient.textContent  = 'Shape Your Future.';
     if (subtitle)  subtitle.textContent  =
@@ -211,19 +248,11 @@
     var frag = document.createDocumentFragment();
 
     STATS.forEach(function (stat) {
-      var item = el('div', 'stat-item');
-      item.setAttribute('role', 'listitem');
-
-      var icon = document.createElement('i');
-      icon.className = 'bi ' + stat.icon + ' stat-icon';
-      icon.setAttribute('aria-hidden', 'true');
-
-      var number = el('div', 'stat-number', stat.number);
-      var label  = el('div', 'stat-label',  stat.label);
-
-      item.appendChild(icon);
-      item.appendChild(number);
-      item.appendChild(label);
+      var item = U.el('div', { className: 'stat-item', role: 'listitem' }, [
+        U.el('i', { className: 'bi ' + stat.icon + ' stat-icon', aria: { hidden: 'true' } }),
+        U.el('div', { className: 'stat-number', textContent: stat.number }),
+        U.el('div', { className: 'stat-label',  textContent: stat.label })
+      ]);
       frag.appendChild(item);
     });
 
@@ -231,71 +260,69 @@
   }
 
   function buildFeaturedCard(course) {
-    var col  = el('div', ['col-12', 'col-md-6', 'col-lg-4']);
-    var card = el('div', 'featured-card');
+    var col = U.el('div', { className: 'col-12 col-md-6 col-lg-4' });
+
+    var card = U.el('div', { className: 'featured-card' });
 
     /* image */
-    var img = document.createElement('img');
-    img.className     = 'featured-card-img';
-    img.alt           = course.title;
-    img.loading       = 'lazy';
-    img.decoding      = 'async';
-    img.width         = 400;
-    img.height        = 225;
-    img.src           = './assets/img/' + course.image;
+    var img = U.el('img', {
+      className: 'featured-card-img',
+      alt:       course.title,
+      loading:   'lazy',
+      decoding:  'async',
+      width:     '400',
+      height:    '225',
+      src:       './assets/img/' + course.image
+    });
     card.appendChild(img);
 
     /* body */
-    var body = el('div', 'featured-card-body');
-    body.appendChild(el('div', 'featured-card-category', course.category));
+    var body = U.el('div', { className: 'featured-card-body' });
 
-    var title = el('h3', 'featured-card-title', course.title);
-    body.appendChild(title);
-
-    body.appendChild(el('p', 'featured-card-desc', course.description));
+    body.appendChild(U.el('div', { className: 'featured-card-category', textContent: course.category }));
+    body.appendChild(U.el('h3',  { className: 'featured-card-title',    textContent: course.title }));
+    body.appendChild(U.el('p',   { className: 'featured-card-desc',     textContent: course.description }));
 
     /* meta */
-    var meta = el('div', 'featured-card-meta');
+    var metaRow = U.el('div', { className: 'featured-card-meta' });
 
-    var starsWrap = el('div', 'featured-stars');
-    starsWrap.setAttribute('role', 'img');
-    starsWrap.setAttribute('aria-label',
-      'Rating: ' + course.rating + ' out of 5');
+    var starsWrap = U.el('div', {
+      className: 'featured-stars',
+      role:      'img',
+      aria:      { label: 'Rating: ' + course.rating + ' out of 5' }
+    });
     starsWrap.appendChild(buildStarFragment(course.rating));
-    meta.appendChild(starsWrap);
+    metaRow.appendChild(starsWrap);
 
-    var lessonsItem = el('span', 'featured-meta-item');
-    var lessonsIcon = document.createElement('i');
-    lessonsIcon.className = 'bi bi-play-circle';
-    lessonsIcon.setAttribute('aria-hidden', 'true');
-    lessonsItem.appendChild(lessonsIcon);
-    lessonsItem.appendChild(
-      document.createTextNode(' ' + course.lessons + ' lessons'));
-    meta.appendChild(lessonsItem);
+    var lessonsItem = U.el('span', { className: 'featured-meta-item' }, [
+      U.el('i', { className: 'bi bi-play-circle', aria: { hidden: 'true' } }),
+      ' ' + course.lessons + ' lessons'
+    ]);
+    metaRow.appendChild(lessonsItem);
 
-    var levelItem = el('span', 'featured-meta-item');
-    var levelIcon = document.createElement('i');
-    levelIcon.className = 'bi bi-bar-chart-fill';
-    levelIcon.setAttribute('aria-hidden', 'true');
-    levelItem.appendChild(levelIcon);
-    levelItem.appendChild(document.createTextNode(' ' + course.level));
-    meta.appendChild(levelItem);
+    var levelItem = U.el('span', { className: 'featured-meta-item' }, [
+      U.el('i', { className: 'bi bi-bar-chart-fill', aria: { hidden: 'true' } }),
+      ' ' + course.level
+    ]);
+    metaRow.appendChild(levelItem);
 
-    body.appendChild(meta);
+    body.appendChild(metaRow);
 
     /* footer */
-    var footer  = el('div', 'featured-card-footer');
-    var priceEl = el('span');
-    priceEl.className = 'featured-card-price' +
-      (course.price === 0 ? ' featured-card-price--free' : '');
-    priceEl.textContent = formatPrice(course.price);
+    var footer = U.el('div', { className: 'featured-card-footer' });
+
+    var priceEl = U.el('span', {
+      className:   'featured-card-price' + (course.price === 0 ? ' featured-card-price--free' : ''),
+      textContent: formatPrice(course.price)
+    });
     footer.appendChild(priceEl);
 
-    var btn     = document.createElement('a');
-    btn.className   = 'featured-card-btn';
-    btn.href        = buildCourseUrl(course.id);
-    btn.textContent = 'View Course';
-    btn.setAttribute('aria-label', 'View course: ' + course.title);
+    var btn = U.el('a', {
+      className:   'featured-card-btn',
+      href:        U.sanitizeUrl(buildCourseUrl(course.id)),
+      textContent: 'View Course',
+      aria:        { label: 'View course: ' + course.title }
+    });
     footer.appendChild(btn);
 
     body.appendChild(footer);
@@ -315,23 +342,24 @@
   }
 
   function buildCategoryCard(name, count, colorKey) {
-    var col    = el('div', ['col-6', 'col-sm-4', 'col-md-3', 'col-lg-2']);
-    var anchor = document.createElement('a');
-    anchor.className = 'category-card category-card--' + colorKey;
-    anchor.href      = buildCatalogUrl(name);
-    anchor.setAttribute('aria-label',
-      name + ' — ' + count + (count === 1 ? ' course' : ' courses'));
+    var col = U.el('div', { className: 'col-6 col-sm-4 col-md-3 col-lg-2' });
 
-    var iconWrap = el('div', ['category-icon', 'category-icon--' + colorKey]);
-    var iconEl   = document.createElement('i');
-    iconEl.className = 'bi ' + (CATEGORY_ICONS[name] || 'bi-bookmark-fill');
-    iconEl.setAttribute('aria-hidden', 'true');
-    iconWrap.appendChild(iconEl);
+    var anchor = U.el('a', {
+      className: 'category-card category-card--' + colorKey,
+      href:      U.sanitizeUrl(buildCatalogUrl(name)),
+      aria:      { label: name + ' — ' + count + (count === 1 ? ' course' : ' courses') }
+    });
+
+    var iconWrap = U.el('div', { className: 'category-icon category-icon--' + colorKey }, [
+      U.el('i', {
+        className: 'bi ' + (CATEGORY_ICONS[name] || 'bi-bookmark-fill'),
+        aria:      { hidden: 'true' }
+      })
+    ]);
     anchor.appendChild(iconWrap);
 
-    anchor.appendChild(el('span', 'category-name', name));
-    anchor.appendChild(el('span', 'category-count',
-      count === 1 ? '1 course' : count + ' courses'));
+    anchor.appendChild(U.el('span', { className: 'category-name',  textContent: name }));
+    anchor.appendChild(U.el('span', { className: 'category-count', textContent: count === 1 ? '1 course' : count + ' courses' }));
 
     col.appendChild(anchor);
     return col;
@@ -343,7 +371,7 @@
     var catMap = getCategoriesWithCount();
     var frag   = document.createDocumentFragment();
     Object.keys(catMap).forEach(function (name) {
-      var colorKey = (COURSE_DATA.categories[name] || {}).color || 'emerald';
+      var colorKey = (DATA.categories[name] || {}).color || 'emerald';
       frag.appendChild(buildCategoryCard(name, catMap[name], colorKey));
     });
     grid.appendChild(frag);
@@ -355,21 +383,22 @@
     var catMap = getCategoriesWithCount();
     var frag   = document.createDocumentFragment();
     Object.keys(catMap).forEach(function (name) {
-      var li = document.createElement('li');
-      var a  = document.createElement('a');
-      a.href        = buildCatalogUrl(name);
-      a.textContent = name;
-      li.appendChild(a);
+      var li = U.el('li', null, [
+        U.el('a', {
+          href:        U.sanitizeUrl(buildCatalogUrl(name)),
+          textContent: name
+        })
+      ]);
       frag.appendChild(li);
     });
     list.appendChild(frag);
   }
 
   function buildWhatsAppLinks() {
-    var url = buildWhatsAppUrl(
-      COURSE_DATA.WHATSAPP_NUMBER,
-      'Hello! I have a question about your courses.'
-    );
+    var url = U.sanitizeUrl(buildWhatsAppUrl(
+      DATA.WHATSAPP_NUMBER,
+      getWhatsAppMessage()
+    ));
     var ctaBtn    = document.getElementById('cta-whatsapp-btn');
     var footerBtn = document.getElementById('footer-whatsapp-link');
     if (ctaBtn)    ctaBtn.href    = url;
@@ -379,10 +408,10 @@
   function buildFooter() {
     var brandEl = document.getElementById('footer-brand-name');
     var copyrEl = document.getElementById('footer-copyright');
-    if (brandEl) brandEl.textContent = COURSE_DATA.BRAND_NAME;
+    if (brandEl) brandEl.textContent = DATA.BRAND_NAME;
     if (copyrEl) copyrEl.textContent =
       '© ' + new Date().getFullYear() + ' ' +
-      COURSE_DATA.BRAND_NAME + '. All rights reserved.';
+      DATA.BRAND_NAME + '. All rights reserved.';
   }
 
   /* ─────────────────────────────────────────
@@ -407,4 +436,3 @@
   }
 
 })();
-

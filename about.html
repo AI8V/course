@@ -1,45 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark" data-bss-forced-theme="dark">
+<html lang="en" data-bs-theme="dark">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
   <!-- SEO — injected at runtime by about-app.js from COURSE_DATA -->
-  <title id="page-title">About Us — Online Learning Platform</title>
+  <title id="page-title">About Us — Ai8V | Mind &amp; Machine</title>
   <meta name="description"
         id="page-desc"
         content="Learn about our online learning platform — our mission, how we work, and how to get in touch.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" id="page-canonical" href="https://ttblabs.com/about.html">
+  <link rel="canonical" id="page-canonical" href="https://ai8v.com/about.html">
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         id="og-url"       content="https://ttblabs.com/about.html">
-  <meta property="og:title"       id="og-title"     content="About Us — Online Learning Platform">
+  <meta property="og:url"         id="og-url"       content="https://ai8v.com/about.html">
+  <meta property="og:title"       id="og-title"     content="About Us — Ai8V | Mind &amp; Machine">
   <meta property="og:description" id="og-desc"      content="Learn about our online learning platform — our mission, how we work, and how to get in touch.">
-  <meta property="og:image"       id="og-image"     content="https://ttblabs.com/assets/img/og-image.png">
-  <meta property="og:site_name"   id="og-site-name" content="TTB Labs">
+  <meta property="og:image"       id="og-image"     content="https://ai8v.com/assets/img/og-image.png">
+  <meta property="og:site_name"   id="og-site-name" content="Ai8V | Mind &amp; Machine">
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       id="tw-title" content="About Us — Online Learning Platform">
+  <meta name="twitter:title"       id="tw-title" content="About Us — Ai8V | Mind &amp; Machine">
   <meta name="twitter:description" id="tw-desc"  content="Learn about our online learning platform — our mission, how we work, and how to get in touch.">
-  <meta name="twitter:image"       id="tw-image" content="https://ttblabs.com/assets/img/og-image.png">
+  <meta name="twitter:image"       id="tw-image" content="https://ai8v.com/assets/img/og-image.png">
 
   <!-- hreflang -->
-  <link rel="alternate" hreflang="en" href="https://ttblabs.com/about.html">
+  <link rel="alternate" hreflang="en" id="hreflang-en" href="https://ai8v.com/about.html">
 
   <!-- CSP — font-src includes 'self' for Inter self-hosted -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'none';
-                 script-src 'self' 'unsafe-inline';
+                 script-src 'self';
                  style-src 'self' https://cdnjs.cloudflare.com;
                  font-src 'self' https://cdnjs.cloudflare.com;
                  img-src 'self' data:;
                  connect-src 'self';
                  form-action 'none';">
-
+                 
   <!-- JSON-LD injected by about-app.js -->
 
   <!-- Favicons -->
@@ -54,9 +54,6 @@
   <!-- Preload critical font -->
   <link rel="preload" href="assets/fonts/inter-variable.woff2"
         as="font" type="font/woff2" crossorigin="anonymous">
-
-  <!-- Preload Bootstrap CSS -->
-  <link rel="preload" href="assets/bootstrap/css/bootstrap.min.css" as="style">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -89,8 +86,7 @@
               data-bs-toggle="collapse" data-bs-target="#mainNav"
               aria-controls="mainNav" aria-expanded="false"
               aria-label="Toggle navigation">
-        <i class="bi bi-list fs-4"
-           style="color:var(--em-500);" aria-hidden="true"></i>
+        <i class="bi bi-list fs-4 icon-em-500" aria-hidden="true"></i>
       </button>
 
       <div class="collapse navbar-collapse" id="mainNav">
@@ -470,8 +466,7 @@
         </div>
 
         <!-- Refund note -->
-        <div class="about-note about-note--em mt-5 mx-auto"
-             style="max-width:640px;">
+        <div class="about-note about-note--em about-note-narrow mt-5 mx-auto">
           <div class="about-note-icon" aria-hidden="true">
             <i class="bi bi-shield-check-fill" aria-hidden="true"></i>
           </div>
@@ -499,8 +494,7 @@
         <!-- Brand -->
         <div class="col-12 col-md-4">
           <div class="about-footer-brand mb-3">
-            <i class="bi bi-cpu-fill me-2"
-               style="color:var(--em-500);" aria-hidden="true"></i>
+            <i class="bi bi-cpu-fill me-2 icon-em-500" aria-hidden="true"></i>
             <span id="footer-brand-name"></span>
           </div>
           <p class="about-footer-tagline">
@@ -519,7 +513,7 @@
 
         <!-- Platform links -->
         <div class="col-6 col-md-2 offset-md-1">
-          <h4 class="about-footer-col-title">Platform</h4>
+          <p class="about-footer-col-title">Platform</p>
           <ul class="about-footer-links">
             <li><a href="./index.html">Home</a></li>
             <li><a href="./course/">All Courses</a></li>
@@ -527,9 +521,17 @@
           </ul>
         </div>
 
+        <!-- Categories — built dynamically -->
+        <div class="col-6 col-md-2">
+          <p class="about-footer-col-title">Categories</p>
+          <ul class="about-footer-links" id="footer-categories">
+            <!-- built by about-app.js -->
+          </ul>
+        </div>
+
         <!-- Legal -->
         <div class="col-6 col-md-2">
-          <h4 class="about-footer-col-title">Legal</h4>
+          <p class="about-footer-col-title">Legal</p>
           <ul class="about-footer-links">
             <li><a href="./legal/privacy.html">Privacy Policy</a></li>
             <li><a href="./legal/terms.html">Terms of Use</a></li>
@@ -538,7 +540,7 @@
 
         <!-- Contact -->
         <div class="col-6 col-md-2">
-          <h4 class="about-footer-col-title">Contact</h4>
+          <p class="about-footer-col-title">Contact</p>
           <ul class="about-footer-links">
             <li>
               <a id="footer-wa-link-2"
@@ -576,4 +578,3 @@
 
 </body>
 </html>
-

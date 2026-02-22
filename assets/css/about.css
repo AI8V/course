@@ -5,21 +5,6 @@
    ═══════════════════════════════════════════════════════════════ */
 
 /* ───────────────────────────────────────────
-   BASE
-─────────────────────────────────────────── */
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-base);
-  overflow-x: hidden;
-}
-
-/* ───────────────────────────────────────────
    NAVBAR  (mirrors home.css navbar)
 ─────────────────────────────────────────── */
 
@@ -480,6 +465,10 @@ body {
   background: rgba(16, 185, 129, 0.04);
 }
 
+.about-note-narrow {
+  max-width: 640px;
+}
+
 .about-note-icon {
   font-size: 1.3rem;
   color: var(--em-400);
@@ -736,19 +725,19 @@ body {
    RESPONSIVE
 ─────────────────────────────────────────── */
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
   .about-section {
     padding: 4rem 0;
   }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
   .about-contact-section {
     padding-bottom: 4.5rem;
   }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
   .about-visual-panel {
     margin-top: 2rem;
   }
@@ -817,4 +806,3 @@ body {
     gap: 0.75rem;
   }
 }
-

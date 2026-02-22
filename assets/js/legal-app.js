@@ -3,20 +3,34 @@
 /* ═══════════════════════════════════════════════════════════════
    legal-app.js — Shared logic for legal/privacy.html
                   and legal/terms.html
-   Depends on: COURSE_DATA (courses-data.js)
+   Depends on: Utils (utils.js), COURSE_DATA (courses-data.js)
    NO innerHTML for dynamic content — DOM API only.
    ═══════════════════════════════════════════════════════════════ */
 
 (function () {
 
   /* ─────────────────────────────────────────
-     HELPERS
+     GUARD CLAUSE + ALIASES
+  ───────────────────────────────────────── */
+
+  var U    = window.Utils;
+  var DATA = window.COURSE_DATA;
+
+  if (!U || !DATA) {
+    console.error('legal-app: dependencies missing.');
+    return;
+  }
+
+  var META = DATA.META;
+
+  /* ─────────────────────────────────────────
+     HELPERS (using Utils)
   ───────────────────────────────────────── */
 
   function buildWhatsAppUrl(phone, message) {
     var base = 'https://wa.me/' + encodeURIComponent(phone);
     if (message) base += '?text=' + encodeURIComponent(message);
-    return base;
+    return U.sanitizeUrl(base);
   }
 
   function setText(id, text) {
@@ -26,7 +40,7 @@
 
   function setHref(id, href) {
     var el = document.getElementById(id);
-    if (el) el.href = href;
+    if (el) el.href = U.sanitizeUrl(href);
   }
 
   function setAttr(id, attr, val) {
@@ -39,27 +53,24 @@
   ───────────────────────────────────────── */
 
   function injectSEO() {
-    var brand   = COURSE_DATA.BRAND_NAME;
-    var domain  = COURSE_DATA.DOMAIN;
-    var meta    = COURSE_DATA.META;
+    var brand   = DATA.BRAND_NAME;
+    var domain  = DATA.DOMAIN;
     var base    = 'https://' + domain;
 
     /* detect current page */
     var isTerms   = window.location.pathname.indexOf('terms') !== -1;
     var pageSlug  = isTerms ? 'terms.html' : 'privacy.html';
     var pageUrl   = base + '/legal/' + pageSlug;
-    var pageImage = base + meta.ogImage;
+    var pageImage = base + META.ogImage;
 
     var pageTitle, pageDesc;
 
     if (isTerms) {
       pageTitle = 'Terms of Use — ' + brand;
-      pageDesc  = 'Terms of Use for ' + brand +
-        ' — purchase conditions, refund policy, content rights, and access terms.';
+      pageDesc  = META.descriptionShort + ' — Terms of Use';
     } else {
       pageTitle = 'Privacy Policy — ' + brand;
-      pageDesc  = 'Privacy Policy for ' + brand +
-        ' — how we collect, use and protect your personal information.';
+      pageDesc  = META.descriptionShort + ' — Privacy Policy';
     }
 
     /* <title> */
@@ -81,9 +92,9 @@
     setAttr('tw-desc',  'content', pageDesc);
     setAttr('tw-image', 'content', pageImage);
 
-    /* hreflang */
-    var hreflang = document.querySelector(
-      'link[rel="alternate"][hreflang="en"]');
+    /* hreflang — try ID first, fall back to attribute selector */
+    var hreflang = document.getElementById('hreflang-en')
+      || document.querySelector('link[rel="alternate"][hreflang="en"]');
     if (hreflang) hreflang.setAttribute('href', pageUrl);
 
     /* JSON-LD — WebPage schema */
@@ -96,12 +107,10 @@
       'description': pageDesc,
       'isPartOf': { '@id': base + '/#website' },
       'inLanguage': 'en',
-      'dateModified': '2026-02-19'
+      'dateModified': META.legalLastUpdated || '2026-02-19'
     };
 
-    var script = document.createElement('script');
-    script.type        = 'application/ld+json';
-    script.textContent = JSON.stringify(schema, null, 2);
+    var script = U.el('script', { type: 'application/ld+json', textContent: JSON.stringify(schema, null, 2) });
     document.head.appendChild(script);
   }
 
@@ -110,12 +119,12 @@
   ───────────────────────────────────────── */
 
   function buildNavBrand() {
-    setText('nav-brand-name', COURSE_DATA.BRAND_NAME);
+    setText('nav-brand-name', DATA.BRAND_NAME);
   }
 
   function buildInlineBrandDomain() {
-    var brand  = COURSE_DATA.BRAND_NAME;
-    var domain = COURSE_DATA.DOMAIN;
+    var brand  = DATA.BRAND_NAME;
+    var domain = DATA.DOMAIN;
     var base   = 'https://' + domain;
 
     /* brand inline references — no-op if ID not present in page */
@@ -131,7 +140,7 @@
     var domainLink = document.getElementById('domain-link');
     if (domainLink) {
       domainLink.textContent = domain;
-      domainLink.href        = base;
+      domainLink.href        = U.sanitizeUrl(base);
     }
 
     /* terms page: self-referencing URL */
@@ -139,29 +148,31 @@
     if (termsLink) {
       var termsUrl = base + '/legal/terms.html';
       termsLink.textContent = termsUrl;
-      termsLink.href        = termsUrl;
+      termsLink.href        = U.sanitizeUrl(termsUrl);
     }
   }
 
   function buildEmailLinks() {
-    var email  = COURSE_DATA.META.supportEmail;
+    var email  = META.supportEmail;
     var mailto = 'mailto:' + email;
 
     var contactLink = document.getElementById('contact-email-link');
-    if (contactLink) contactLink.href = mailto;
+    if (contactLink) contactLink.href = U.sanitizeUrl(mailto);
 
     var contactText = document.getElementById('contact-email-text');
     if (contactText) contactText.textContent = email;
 
     var footerLink = document.getElementById('footer-email-link');
-    if (footerLink) footerLink.href = mailto;
+    if (footerLink) footerLink.href = U.sanitizeUrl(mailto);
   }
 
   function buildWhatsAppLinks() {
-    var url = buildWhatsAppUrl(
-      COURSE_DATA.WHATSAPP_NUMBER,
-      'Hello! I have a question about your courses.'
-    );
+    var message = (META.whatsappDefaultMessage)
+      ? META.whatsappDefaultMessage
+      : 'Hello! I have a question about your courses.';
+
+    var url = buildWhatsAppUrl(DATA.WHATSAPP_NUMBER, message);
+
     ['contact-whatsapp-link',
      'footer-whatsapp-link',
      'footer-wa-link-2'
@@ -169,11 +180,38 @@
   }
 
   function buildFooter() {
-    setText('footer-brand-name', COURSE_DATA.BRAND_NAME);
+    setText('footer-brand-name', DATA.BRAND_NAME);
     setText('footer-copyright',
       '© ' + new Date().getFullYear() + ' ' +
-      COURSE_DATA.BRAND_NAME + '. All rights reserved.'
+      DATA.BRAND_NAME + '. All rights reserved.'
     );
+  }
+
+  /* ─────────────────────────────────────────
+     FOOTER CATEGORIES
+  ───────────────────────────────────────── */
+
+  function buildFooterCategories() {
+    var container = document.getElementById('footer-categories');
+    if (!container) return;
+
+    /* compute { categoryName → courseCount } from live data */
+    var counts = {};
+    DATA.courses.forEach(function (c) {
+      if (!c.category) return;
+      counts[c.category] = (counts[c.category] || 0) + 1;
+    });
+
+    var names = Object.keys(counts);
+    if (!names.length) return;
+
+    names.forEach(function (name) {
+      var href = '../course/?category=' + encodeURIComponent(name);
+      var li = U.el('li', null, [
+        U.el('a', { href: U.sanitizeUrl(href), textContent: name })
+      ]);
+      container.appendChild(li);
+    });
   }
 
   /* ─────────────────────────────────────────
@@ -181,7 +219,7 @@
   ───────────────────────────────────────── */
 
   function initTocScroll() {
-    var toc = document.querySelector('.legal-toc');
+    var toc = U.qs('.legal-toc');
     if (!toc) return;
 
     toc.addEventListener('click', function (e) {
@@ -195,8 +233,8 @@
       e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-      if (history.pushState) {
-        history.pushState(null, '', '#' + targetId);
+      if (history.replaceState) {
+        history.replaceState(null, '', '#' + targetId);
       }
     });
   }
@@ -212,6 +250,7 @@
     buildEmailLinks();
     buildWhatsAppLinks();
     buildFooter();
+    buildFooterCategories();
     initTocScroll();
   }
 

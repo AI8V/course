@@ -306,6 +306,9 @@
       ct.textContent = String(n);
       item.classList.toggle('disabled', n === 0);
       cb.disabled = n === 0;
+      if (n === 0 && cb.checked) {
+        cb.checked = false;
+      }
     });
   }
 
@@ -421,6 +424,7 @@
     if (f.level !== 'All')            p.set('level',      f.level);
     if (f.search)                     p.set('search',     f.search);
     if (state.currentSort !== 'average ratings') p.set('sort', state.currentSort);
+    if (state.currentPage > 1)        p.set('page',       String(state.currentPage));
     history.replaceState(null, '', p.toString() ? location.pathname + '?' + p : location.pathname);
   }
 
@@ -444,6 +448,8 @@
     if (p.get('search') && DOM.search) DOM.search.value = p.get('search');
     var st = p.get('sort');
     if (VALID_SORT_KEYS.indexOf(st) !== -1) state.currentSort = st;
+    var pg = parseInt(p.get('page'), 10);
+    if (!isNaN(pg) && pg >= 1) state.currentPage = pg;
   }
 
   // ── Schema ──
@@ -455,7 +461,7 @@
     var schema = {
       '@context':    'https://schema.org',
       '@type':       'ItemList',
-      'name':        'Online Courses',
+      'name':        DATA.BRAND_NAME + ' — Courses',
       'numberOfItems': courses.length,
       'itemListElement': courses.map(function (c, i) {
         return {
@@ -510,7 +516,7 @@
       DOM.results.textContent = 'Showing ' + (total ? start + 1 : 0) + '–' + end + ' of ' + total + ' results';
     }
     buildPagination(total);
-    updateSchema(page);
+    updateSchema(state.filteredCourses);
     writeURL();
     U.announce(total + ' courses found');
   }
@@ -563,7 +569,7 @@
     buildSort();
     readURL();
     bindEvents();
-    render(true);
+    render(false);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

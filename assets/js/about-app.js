@@ -2,30 +2,42 @@
 
 /* ═══════════════════════════════════════════════════════════════
    about-app.js — Logic for about.html
-   Depends on: COURSE_DATA (courses-data.js)
+   Depends on: Utils (utils.js), COURSE_DATA (courses-data.js)
    NO innerHTML for dynamic content — DOM API only.
    ═══════════════════════════════════════════════════════════════ */
 
 (function () {
 
   /* ─────────────────────────────────────────
-     HELPERS
+     ALIASES + GUARD CLAUSE
   ───────────────────────────────────────── */
 
-  function buildWhatsAppUrl(phone, message) {
-    var base = 'https://wa.me/' + encodeURIComponent(phone);
-    if (message) base += '?text=' + encodeURIComponent(message);
-    return base;
+  var U    = window.Utils;
+  var DATA = window.COURSE_DATA;
+
+  if (!U || !DATA) {
+    console.error('about-app: dependencies missing.');
+    return;
   }
 
+  /* ─────────────────────────────────────────
+     HELPERS (now powered by Utils)
+  ───────────────────────────────────────── */
+
   function setAttr(id, attr, val) {
-    var el = document.getElementById(id);
+    var el = U.qs('#' + id);
     if (el) el.setAttribute(attr, val);
   }
 
   function setText(id, val) {
-    var el = document.getElementById(id);
+    var el = U.qs('#' + id);
     if (el) el.textContent = val;
+  }
+
+  function buildWhatsAppUrl(phone, message) {
+    var raw = 'https://wa.me/' + encodeURIComponent(phone);
+    if (message) raw += '?text=' + encodeURIComponent(message);
+    return U.sanitizeUrl(raw);
   }
 
   /* ─────────────────────────────────────────
@@ -33,42 +45,49 @@
   ───────────────────────────────────────── */
 
   function injectSEO() {
-    var brand  = COURSE_DATA.BRAND_NAME;
-    var domain = COURSE_DATA.DOMAIN;
-    var meta   = COURSE_DATA.META;
-    var base   = 'https://' + domain;
+    var brand   = DATA.BRAND_NAME;
+    var domain  = DATA.DOMAIN;
+    var meta    = DATA.META;
+    var base    = 'https://' + domain;
     var pageUrl = base + '/about.html';
 
     var pageTitle = 'About Us — ' + brand;
-    var pageDesc  = 'Learn about ' + brand +
-      ' — our mission, how we work, and how to get in touch with us.';
+    var pageDesc  = meta.descriptionShort + ' — ' + brand;
     var pageImage = base + meta.ogImage;
 
     /* <title> */
     document.title = pageTitle;
 
     /* meta description */
-    setAttr('page-desc',    'content', pageDesc);
-    setAttr('page-canonical','href',   pageUrl);
+    setAttr('page-desc',     'content', pageDesc);
+    setAttr('page-canonical', 'href',   pageUrl);
 
     /* Open Graph */
-    setAttr('og-url',      'content', pageUrl);
-    setAttr('og-title',    'content', pageTitle);
-    setAttr('og-desc',     'content', pageDesc);
-    setAttr('og-image',    'content', pageImage);
-    setAttr('og-site-name','content', brand);
+    setAttr('og-url',       'content', pageUrl);
+    setAttr('og-title',     'content', pageTitle);
+    setAttr('og-desc',      'content', pageDesc);
+    setAttr('og-image',     'content', pageImage);
+    setAttr('og-site-name', 'content', brand);
 
     /* Twitter Card */
     setAttr('tw-title', 'content', pageTitle);
     setAttr('tw-desc',  'content', pageDesc);
     setAttr('tw-image', 'content', pageImage);
 
-    /* hreflang */
-    var hreflang = document.querySelector(
-      'link[rel="alternate"][hreflang="en"]');
+    /* hreflang — try id first, fall back to attribute selector */
+    var hreflang = U.qs('#hreflang-en') ||
+                   U.qs('link[rel="alternate"][hreflang="en"]');
     if (hreflang) hreflang.setAttribute('href', pageUrl);
 
-    /* JSON-LD — Organization + ContactPage */
+    /* aria-current="page" on About nav link */
+    U.qsa('.nav-link').forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (href && href.indexOf('about') !== -1) {
+        link.setAttribute('aria-current', 'page');
+      }
+    });
+
+    /* JSON-LD — Organization + WebPage */
     var schema = {
       '@context': 'https://schema.org',
       '@graph': [
@@ -77,7 +96,7 @@
           '@id': base + '/#organization',
           'name': brand,
           'url': base,
-          'logo': base + '/assets/img/fav180.png',
+          'logo': base + (meta.logoPath || '/assets/img/fav180.png'),
           'foundingDate': meta.foundingYear,
           'contactPoint': {
             '@type': 'ContactPoint',
@@ -109,50 +128,68 @@
   ───────────────────────────────────────── */
 
   function buildNavBrand() {
-    setText('nav-brand-name', COURSE_DATA.BRAND_NAME);
+    setText('nav-brand-name', DATA.BRAND_NAME);
   }
 
   function buildInlineBrands() {
     /* brand-inline-1 — used in platform section body text */
-    setText('brand-inline-1', COURSE_DATA.BRAND_NAME);
+    setText('brand-inline-1', DATA.BRAND_NAME);
   }
 
   function buildWhatsAppLinks() {
-    var url = buildWhatsAppUrl(
-      COURSE_DATA.WHATSAPP_NUMBER,
-      'Hello! I have a question about your courses.'
-    );
+    var message = (DATA.META && DATA.META.whatsappDefaultMessage)
+      ? DATA.META.whatsappDefaultMessage
+      : 'Hello! I have a question about your courses.';
+    var url = buildWhatsAppUrl(DATA.WHATSAPP_NUMBER, message);
     var ids = [
       'contact-whatsapp-btn',
       'footer-whatsapp-link',
       'footer-wa-link-2'
     ];
     ids.forEach(function (id) {
-      var el = document.getElementById(id);
+      var el = U.qs('#' + id);
       if (el) el.href = url;
     });
   }
 
   function buildEmailLinks() {
-    var email = COURSE_DATA.META.supportEmail;
-    var mailto = 'mailto:' + email;
+    var email  = DATA.META.supportEmail;
+    var mailto = U.sanitizeUrl('mailto:' + email);
 
-    var contactLink = document.getElementById('contact-email-link');
+    var contactLink = U.qs('#contact-email-link');
     if (contactLink) contactLink.href = mailto;
 
-    var contactText = document.getElementById('contact-email-text');
+    var contactText = U.qs('#contact-email-text');
     if (contactText) contactText.textContent = email;
 
-    var footerLink = document.getElementById('footer-email-link');
+    var footerLink = U.qs('#footer-email-link');
     if (footerLink) footerLink.href = mailto;
   }
 
   function buildFooter() {
-    setText('footer-brand-name', COURSE_DATA.BRAND_NAME);
+    setText('footer-brand-name', DATA.BRAND_NAME);
     setText('footer-copyright',
       '© ' + new Date().getFullYear() + ' ' +
-      COURSE_DATA.BRAND_NAME + '. All rights reserved.'
+      DATA.BRAND_NAME + '. All rights reserved.'
     );
+  }
+
+  function buildFooterCategories() {
+    var list = U.qs('#footer-categories');
+    if (!list) return;
+    var catMap = {};
+    DATA.courses.forEach(function (c) {
+      catMap[c.category] = (catMap[c.category] || 0) + 1;
+    });
+    Object.keys(catMap).forEach(function (name) {
+      var li = document.createElement('li');
+      var a = U.el('a', {
+        href: U.sanitizeUrl('./course/?category=' + encodeURIComponent(name)),
+        textContent: name
+      });
+      li.appendChild(a);
+      list.appendChild(li);
+    });
   }
 
   /* ─────────────────────────────────────────
@@ -166,6 +203,7 @@
     buildWhatsAppLinks();
     buildEmailLinks();
     buildFooter();
+    buildFooterCategories();
   }
 
   if (document.readyState === 'loading') {
