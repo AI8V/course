@@ -81,25 +81,81 @@ var COURSE_DATA = (function () {
   ];
 
   var courses = [
+{
+  id: 1,
+  title: "DataMap Pro — Business Data Intelligence",
+  category: "Marketing",
+  level: "Beginner",
+  price: 49.00,  
+  students: 0,
+  lessons: 1,
+  rating: 0,
+  date: "2025-02-21",
+  description: "استخراج وتنظيف وتحليل بيانات الأنشطة التجارية من جوجل ماب مباشرة. أداة ذكية تعمل بالكامل في متصفحك بدون خوادم. بيانات نظيفة + تحليل ذكي + تصدير Excel جاهز للاستخدام. وصول مدى الحياة + تحديثات مستمرة.",
+  image: "og-image.png",  
+  instructor: "DataMap Team",
+  tags: ["data", "business", "google maps", "excel", "analytics"],
+  driveUrl: "",  
+  learningObjectives: [
+    "استخراج بيانات أنشطة تجارية من جوجل ماب مباشرة",
+    "تنظيف البيانات وكشف التكرارات تلقائياً",
+    "تحليل البيانات مع رسوم بيانية وتقارير",
+    "تصدير البيانات بصيغ متعددة (Excel/CSV)",
+    "استخدام الاستنتاجات الذكية لفهم السوق",
+    "بناء قائمة عملاء مؤهلين جاهزة للبيع"
+  ],
+  curriculum: [
     {
-      id: 1,
-      title: "Introduction LearnPress - LMS Complete Guide",
-      category: "Business",
-      level: "Beginner",
-      price: 500.00,
-      students: 333,
-      lessons: 13,
-      rating: 4.5,
-      date: "2025-08-01",
-      description: "Learn the fundamentals of LearnPress LMS and how to create engaging online courses.",
-      image: "example.png",
-      instructor: "John Doe",
-      tags: ["lms", "wordpress", "education"],
-      driveUrl: "",
-      learningObjectives: sharedObjectives,
-      curriculum: sharedCurriculum,
-      faq: sharedFaq
+      title: "البدء السريع",
+      lessons: [
+        { title: "مقدمة الأداة والمميزات", duration: "03:00", preview: true },
+        { title: "خطوات الاستخراج الأول", duration: "05:00", preview: true },
+        { title: "الإعدادات الأساسية", duration: "04:00", preview: false }
+      ]
     },
+    {
+      title: "التنظيف والتحليل",
+      lessons: [
+        { title: "فهم التكرارات والدمج", duration: "08:00", preview: false },
+        { title: "الفلاتر والبحث المتقدم", duration: "10:00", preview: false },
+        { title: "الرسوم البيانية والتقارير", duration: "07:00", preview: false }
+      ]
+    },
+    {
+      title: "التصدير والاستخدام",
+      lessons: [
+        { title: "تصدير Excel/CSV", duration: "05:00", preview: false },
+        { title: "استخدام البيانات في التسويق", duration: "06:00", preview: false }
+      ]
+    }
+  ],
+  faq: [
+    {
+      question: "هل الأداة حقاً مجانية أم في تكاليف مخفية؟",
+      answer: "49 دولار سنويا = كل شيء. لا تكاليف إضافية. الوصول مدى الحياة والتحديثات مستمرة."
+    },
+    {
+      question: "كم بيانات أقدر أستخرج؟",
+      answer: "بدون حد. الأداة تحمل ملايين السجلات. الحد الوحيد هو حجم ملف الاستيراد (50MB أقصى)."
+    },
+    {
+      question: "البيانات آمنة؟",
+      answer: "100% آمنة. الأداة تعمل بالكامل في متصفحك. لا خوادم، لا تحميل سحابي. بيانات حساسة تبقى عندك."
+    },
+    {
+      question: "أقدر أستخدمها بدون إنترنت؟",
+      answer: "بعد التحميل الأول نعم. الأداة PWA — تعمل offline بالكامل عبر Service Worker."
+    },
+    {
+      question: "في نسخة تجريبية؟",
+      answer: "نعم، جرّب الأداة مجاناً للمدينة الأولى. بدون بطاقة ائتمان. كل شيء متاح."
+    },
+    {
+      question: "كام عميل دفع بالفعل؟",
+      answer: "أنت أول العملاء! 🎉 الأداة جديدة وقيمتها عالية جداً. كن من الأول."
+    }
+  ]
+},
     {
       id: 2,
       title: "Health Foundations - Complete Wellness Guide",
@@ -237,10 +293,7 @@ var COURSE_DATA = (function () {
 
   var categories = {
     "Business":     { color: "emerald" },
-    "Health":       { color: "teal"    },
-    "IT":           { color: "cyan"    },
     "Marketing":    { color: "emerald" },
-    "Photography":  { color: "teal"    },
     "Design":       { color: "cyan"    },
     "Developer":    { color: "emerald" }
   };
