@@ -281,7 +281,9 @@
 
     body.appendChild(U.el('div', { className: 'featured-card-category', textContent: course.category }));
     body.appendChild(U.el('h3',  { className: 'featured-card-title',    textContent: course.title }));
-    body.appendChild(U.el('p',   { className: 'featured-card-desc',     textContent: course.description }));
+    var descAttrs = { className: 'featured-card-desc', textContent: course.description };
+    if (course.language === 'ar') { descAttrs.dir = 'rtl'; descAttrs.lang = 'ar'; descAttrs.style = { textAlign: 'right' }; }
+    body.appendChild(U.el('p', descAttrs));
 
     /* meta */
     var metaRow = U.el('div', { className: 'featured-card-meta' });
