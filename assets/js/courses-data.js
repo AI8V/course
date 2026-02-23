@@ -87,6 +87,7 @@ var COURSE_DATA = (function () {
       category: "Marketing",
       level: "Beginner",
       price: 49.00,
+      originalPrice: 99.00,      
       students: 0,
       lessons: 1,
       rating: 0,
@@ -442,5 +443,6 @@ var COURSE_DATA = (function () {
 })();
 
 if (typeof window !== 'undefined') window.COURSE_DATA = COURSE_DATA;
+
 
 
