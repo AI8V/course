@@ -386,7 +386,7 @@ var COURSE_DATA = (function () {
   ];
 
   var categories = {
-    "Business":     { color: "emerald" },
+    "Business":     { color: "teal" },
     "Marketing":    { color: "emerald" },
 /*    "Photography":  { color: "teal"    },
     "Health":       { color: "teal"    },
@@ -442,4 +442,5 @@ var COURSE_DATA = (function () {
 })();
 
 if (typeof window !== 'undefined') window.COURSE_DATA = COURSE_DATA;
+
 
