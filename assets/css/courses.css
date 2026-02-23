@@ -29,6 +29,12 @@
   --teal-600: #0d9488;
   --cyan-400: #22d3ee;
   --cyan-500: #06b6d4;
+
+  --gold-400: #e9c452;
+  --gold-500: #e2b340;
+  --gold-600: #c99b2d;
+  --gold-900: rgba(226, 179, 64, 0.12);
+
   --text-primary: #f0fdf4;
   --text-secondary: #86efac;
   --text-muted: #6b7f75;
