@@ -463,6 +463,77 @@
     ]);
   }
 
+  /* ── Price Display Builder ── */                   /* ← دالة جديدة */
+
+  function _buildPriceDisplay(course) {
+    var isFree = parseFloat(course.price) === 0;
+
+    /* — Free course — */
+    if (isFree) {
+      return U.el('div', {
+        className: 'price-display',
+        style:     { direction: 'ltr' }
+      }, [
+        U.el('span', {
+          className:   'price-current free',
+          textContent: 'Free'
+        })
+      ]);
+    }
+
+    var currentPrice = parseFloat(course.price);
+    var originalPrice = parseFloat(course.originalPrice) || 0;
+    var hasDiscount = originalPrice > currentPrice && currentPrice > 0;
+
+    /* — Paid, no discount — */
+    if (!hasDiscount) {
+      return U.el('div', {
+        className: 'price-display',
+        style:     { direction: 'ltr' },
+        aria:      { label: 'Price: $' + currentPrice.toFixed(2) }
+      }, [
+        U.el('span', {
+          className:   'price-current',
+          textContent: '$' + currentPrice.toFixed(2),
+          aria:        { hidden: 'true' }
+        })
+      ]);
+    }
+
+    /* — Paid, with discount — */
+    var discountPercent = Math.round((1 - currentPrice / originalPrice) * 100);
+    var savedAmount     = (originalPrice - currentPrice).toFixed(2);
+
+    var ariaText = 'Original price $' + originalPrice.toFixed(2) +
+                   ', now $' + currentPrice.toFixed(2) +
+                   ', ' + discountPercent + '% discount, you save $' + savedAmount;
+
+    return U.el('div', {
+      className: 'price-display',
+      style:     { direction: 'ltr' },
+      aria:      { label: ariaText }
+    }, [
+      U.el('span', {
+        className:   'price-original',
+        textContent: '$' + originalPrice.toFixed(2),
+        aria:        { hidden: 'true' }
+      }),
+      U.el('span', {
+        className:   'price-current',
+        textContent: '$' + currentPrice.toFixed(2),
+        aria:        { hidden: 'true' }
+      }),
+      U.el('span', {
+        className: 'price-discount',
+        aria:      { hidden: 'true' }
+      }, [
+        discountPercent + '% OFF',
+        U.el('span', { className: 'price-discount-dot', textContent: '·' }),
+        'Save $' + savedAmount
+      ])
+    ]);
+  }
+
   /* ── Sidebar Card ── */
 
   function buildSidebarCard(course) {
@@ -474,14 +545,9 @@
       decoding:  'async'
     });
 
-    var isFree    = parseFloat(course.price) === 0;
-    var priceText = isFree ? 'Free' : '$' + parseFloat(course.price).toFixed(2);
-    var priceEl = U.el('div', { className: 'price-display' }, [
-      U.el('span', {
-        className:   'price-current' + (isFree ? ' free' : ''),
-        textContent: priceText
-      })
-    ]);
+    var priceEl = _buildPriceDisplay(course);                /* ← التغيير هنا */
+
+    var isFree = parseFloat(course.price) === 0;
 
     var buttonsWrapper = U.el('div', {
       className: 'sidebar-buttons',
@@ -732,7 +798,7 @@
 
   /* ── Init ── */
 
-  function init() {
+    function init() {
     var app      = U.qs('#app') || document.body;
     var courseId = getCourseIdFromURL();
 
@@ -743,6 +809,14 @@
 
     injectSEO(course);
     buildPage(course, app);
+
+    /* Scroll past navigation to course title on initial load */
+    requestAnimationFrame(function () {
+      var titleEl = U.qs('.page-title');
+      if (titleEl) {
+        titleEl.scrollIntoView({ behavior: 'instant', block: 'start' });
+      }
+    });
   }
 
   if (document.readyState === 'loading') {
