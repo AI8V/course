@@ -188,7 +188,8 @@
       decoding:  'async'
     });
 
-    var badge   = U.el('span', { className: 'course-badge', textContent: course.category });
+    var badgeColor = (DATA.categories[course.category] || {}).color || 'emerald';
+    var badge = U.el('span', { className: 'course-badge course-badge--' + badgeColor, textContent: course.category });
     var imgWrap = U.el('div',  { className: 'course-card-visual' }, [img, badge]);
 
     var titleEl    = U.el('h3',  { className: 'course-card-title',      textContent: course.title       });
@@ -578,3 +579,4 @@
   else init();
 
 })();s
+
