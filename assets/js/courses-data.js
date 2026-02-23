@@ -157,27 +157,111 @@ var COURSE_DATA = (function () {
         }
       ]
     },
-    /*
     {
       id: 2,
-      title: "Health Foundations - Complete Wellness Guide",
-      category: "Health",
+      title: "CourseBase — Your Course Website Platform",
+      category: "Business",
       level: "Beginner",
-      price: 49.00,
-      students: 510,
-      lessons: 13,
-      rating: 5,
-      date: "2025-07-15",
-      language: "en",
-      description: "Master the basics of health and wellness with practical tips and strategies.",
-      image: "example.png",
-      instructor: "Dr. Sarah Wilson",
-      tags: ["health", "wellness", "nutrition"],
+      price: 399.00,
+      students: 0,
+      lessons: 1,
+      rating: 0,
+      date: "2026-02-23",
+      language: "ar",
+      description: "منصة كورسات كاملة جاهزة للإطلاق — موقع احترافي باسمك ودومينك الخاص. تحصل على الكود الكامل + دليل تنفيذ خطوة بخطوة. بدون اشتراكات شهرية، بدون نسبة من مبيعاتك، بدون أي تكاليف تشغيل. استضافة مجانية على Cloudflare + نظام حماية محتوى متكامل + نظام تقييمات + تصميم احترافي داكن. كل الأرباح ليك 100%.",
+      image: "co-image.png",
+      instructor: "Ai8V Team",
+      tags: ["website", "course platform", "business", "cloudflare", "google apps script", "bootstrap", "white-label", "sell courses"],
       driveUrl: "",
-      learningObjectives: sharedObjectives,
-      curriculum: sharedCurriculum,
-      faq: sharedFaq
+      learningObjectives: [
+        "الحصول على منصة كورسات كاملة جاهزة للتخصيص والإطلاق",
+        "ربط المنصة بدومينك الخاص واستضافة مجانية على Cloudflare",
+        "إعداد نظام حماية المحتوى المدفوع (Worker + Apps Script + Google Sheets)",
+        "تخصيص الهوية البصرية — الاسم والألوان والشعار والوصف من ملف واحد",
+        "إدارة الطلاب والكورسات يدوياً بدون أي تكاليف تشغيل",
+        "إطلاق موقعك بالكامل — من الدومين للنشر على Cloudflare Pages"
+      ],
+      curriculum: [
+        {
+          title: "ملفات المشروع والتجهيز",
+          lessons: [
+            { title: "محتويات الحزمة — كل اللي هتحصل عليه", duration: "05:00", preview: true },
+            { title: "المتطلبات — حساب GitHub + Cloudflare + Google (كلهم مجاناً)", duration: "03:00", preview: true },
+            { title: "هيكل الملفات وشرح كل مجلد", duration: "08:00", preview: false }
+          ]
+        },
+        {
+          title: "التخصيص — خلّي المنصة باسمك",
+          lessons: [
+            { title: "تعديل courses-data.js — الاسم والدومين والواتساب والوصف", duration: "10:00", preview: false },
+            { title: "تغيير الألوان والشعار والصور", duration: "07:00", preview: false },
+            { title: "إضافة كورساتك الخاصة — البيانات والمنهج والأسئلة", duration: "12:00", preview: false },
+            { title: "تعديل صفحات About والسياسات باسم مشروعك", duration: "06:00", preview: false }
+          ]
+        },
+        {
+          title: "الباك إند — نظام الحماية والتقييمات",
+          lessons: [
+            { title: "إنشاء Google Sheet بالهيكل الصحيح (Access + Courses + Ratings)", duration: "05:00", preview: false },
+            { title: "نشر Google Apps Script وربطه بالـ Sheet", duration: "08:00", preview: false },
+            { title: "إعداد Cloudflare Worker — الأسرار والمتغيرات والروابط", duration: "10:00", preview: false },
+            { title: "اختبار نظام الدخول والتقييمات", duration: "06:00", preview: false }
+          ]
+        },
+        {
+          title: "النشر والإطلاق",
+          lessons: [
+            { title: "رفع المشروع على GitHub", duration: "04:00", preview: false },
+            { title: "ربط GitHub بـ Cloudflare Pages", duration: "05:00", preview: false },
+            { title: "إعداد الدومين الخاص وشهادة SSL", duration: "06:00", preview: false },
+            { title: "اختبار الموقع بالكامل قبل الإطلاق", duration: "05:00", preview: false }
+          ]
+        },
+        {
+          title: "إدارة المنصة بعد الإطلاق",
+          lessons: [
+            { title: "إضافة طالب جديد — من الهاش للـ Sheet", duration: "04:00", preview: false },
+            { title: "إضافة كورس جديد وتحديث المحتوى", duration: "06:00", preview: false },
+            { title: "التعامل مع المشاكل الشائعة وحلولها", duration: "05:00", preview: false }
+          ]
+        }
+      ],
+      faq: [
+        {
+          question: "إيه اللي هحصل عليه بالظبط؟",
+          answer: "كود المشروع الكامل (HTML/CSS/JS) + كود Cloudflare Worker + كود Google Apps Script + دليل تنفيذ تفصيلي خطوة بخطوة. كل حاجة تحتاجها لإطلاق منصتك."
+        },
+        {
+          question: "محتاج خبرة برمجة؟",
+          answer: "لا. الدليل مصمم لأي حد يقدر يستخدم الكمبيوتر. كل خطوة موضحة بالتفصيل. التخصيص الأساسي هو تعديل ملف واحد فيه بياناتك."
+        },
+        {
+          question: "فيه تكاليف شهرية أو مخفية؟",
+          answer: "صفر. الاستضافة مجانية على Cloudflare. الباك إند مجاني على Google Apps Script. التكلفة الوحيدة هي الدومين (حوالي $10-15 سنوياً) — وده اختيارك أنت."
+        },
+        {
+          question: "هتاخدوا نسبة من مبيعاتي؟",
+          answer: "لا. المنصة ملكك 100%. كل الأرباح ليك. بتبيع بالسعر اللي أنت عايزه وبتقبض الفلوس مباشرة."
+        },
+        {
+          question: "أقدر أبيع كورسات بأي سعر؟",
+          answer: "أيوا. مفيش حد أدنى أو أقصى. أنت بتحدد أسعارك بالكامل."
+        },
+        {
+          question: "أقدر أضيف كام كورس؟",
+          answer: "بدون حد. تضيف كورسات في ملف البيانات وكل حاجة بتتحدث تلقائياً — الكتالوج والصفحة الرئيسية والفلاتر."
+        },
+        {
+          question: "لو واجهتني مشكلة في التنفيذ؟",
+          answer: "تواصل معانا على واتساب. هنساعدك توصل لحل لأي مشكلة تقنية تواجهك."
+        },
+        {
+          question: "المنصة بتدعم عربي وإنجليزي؟",
+          answer: "أيوا. المنصة بتدعم المحتوى العربي (RTL) والإنجليزي (LTR). تقدر تضيف كورسات بأي لغة."
+        }
+      ]
     },
+    /*
     {
       id: 3,
       title: "Nutrition Basics - Healthy Living Made Simple",
