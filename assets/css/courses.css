@@ -498,6 +498,23 @@ body {
   border-radius: 100px;
 }
 
+/* ── Category Badge Color Variants ── */
+
+.course-badge--emerald {
+  background: var(--emerald-400);
+  color: var(--bg-deep);
+}
+
+.course-badge--teal {
+  background: var(--teal-400);
+  color: var(--bg-deep);
+}
+
+.course-badge--cyan {
+  background: var(--cyan-400);
+  color: var(--bg-deep);
+}
+
 /* Card Body */
 
 .course-card-body {
