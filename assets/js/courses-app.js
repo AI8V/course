@@ -192,7 +192,9 @@
     var imgWrap = U.el('div',  { className: 'course-card-visual' }, [img, badge]);
 
     var titleEl    = U.el('h3',  { className: 'course-card-title',      textContent: course.title       });
-    var desc       = U.el('p',   { className: 'course-card-desc',       textContent: course.description });
+    var descAttrs = { className: 'course-card-desc', textContent: course.description };
+    if (course.language === 'ar') { descAttrs.dir = 'rtl'; descAttrs.lang = 'ar'; descAttrs.style = { textAlign: 'right' }; }
+    var desc = U.el('p', descAttrs);
     var instructor = U.el('span',{ className: 'course-card-instructor' }, [
       U.el('i', { className: 'bi bi-person-fill me-1', aria: { hidden: 'true' } }),
       course.instructor
@@ -575,4 +577,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 
-})();
+})();s
