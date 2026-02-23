@@ -171,7 +171,7 @@ var COURSE_DATA = (function () {
       description: "منصة كورسات كاملة جاهزة للإطلاق — موقع احترافي باسمك ودومينك الخاص. تحصل على الكود الكامل + دليل تنفيذ خطوة بخطوة. بدون اشتراكات شهرية، بدون نسبة من مبيعاتك، بدون أي تكاليف تشغيل. استضافة مجانية على Cloudflare + نظام حماية محتوى متكامل + نظام تقييمات + تصميم احترافي داكن. كل الأرباح ليك 100%.",
       image: "co-image.png",
       instructor: "Ai8V Team",
-      tags: ["website", "course platform", "business", "cloudflare", "google apps script", "bootstrap", "white-label", "sell courses"],
+      tags: ["website", "course platform", "business", "cloudflare", "Google Apps", "bootstrap", "white-label", "sell courses"],
       driveUrl: "",
       learningObjectives: [
         "الحصول على منصة كورسات كاملة جاهزة للتخصيص والإطلاق",
@@ -193,7 +193,7 @@ var COURSE_DATA = (function () {
         {
           title: "التخصيص — خلّي المنصة باسمك",
           lessons: [
-            { title: "تعديل courses-data.js — الاسم والدومين والواتساب والوصف", duration: "10:00", preview: false },
+            { title: "تعديل بيانات الكورسات — الاسم والدومين والواتساب والوصف", duration: "10:00", preview: false },
             { title: "تغيير الألوان والشعار والصور", duration: "07:00", preview: false },
             { title: "إضافة كورساتك الخاصة — البيانات والمنهج والأسئلة", duration: "12:00", preview: false },
             { title: "تعديل صفحات About والسياسات باسم مشروعك", duration: "06:00", preview: false }
@@ -202,8 +202,8 @@ var COURSE_DATA = (function () {
         {
           title: "الباك إند — نظام الحماية والتقييمات",
           lessons: [
-            { title: "إنشاء Google Sheet بالهيكل الصحيح (Access + Courses + Ratings)", duration: "05:00", preview: false },
-            { title: "نشر Google Apps Script وربطه بالـ Sheet", duration: "08:00", preview: false },
+            { title: "إنشاء ملف اكسيل بسيط  لإدارة الطلبة المسجلين", duration: "05:00", preview: false },
+            { title: " ربط الـ باك إند بالـ Sheet", duration: "08:00", preview: false },
             { title: "إعداد Cloudflare Worker — الأسرار والمتغيرات والروابط", duration: "10:00", preview: false },
             { title: "اختبار نظام الدخول والتقييمات", duration: "06:00", preview: false }
           ]
@@ -220,7 +220,7 @@ var COURSE_DATA = (function () {
         {
           title: "إدارة المنصة بعد الإطلاق",
           lessons: [
-            { title: "إضافة طالب جديد — من الهاش للـ Sheet", duration: "04:00", preview: false },
+            { title: "إضافة طالب جديد — للـ Sheet", duration: "04:00", preview: false },
             { title: "إضافة كورس جديد وتحديث المحتوى", duration: "06:00", preview: false },
             { title: "التعامل مع المشاكل الشائعة وحلولها", duration: "05:00", preview: false }
           ]
@@ -229,7 +229,7 @@ var COURSE_DATA = (function () {
       faq: [
         {
           question: "إيه اللي هحصل عليه بالظبط؟",
-          answer: "كود المشروع الكامل (HTML/CSS/JS) + كود Cloudflare Worker + كود Google Apps Script + دليل تنفيذ تفصيلي خطوة بخطوة. كل حاجة تحتاجها لإطلاق منصتك."
+          answer: "كود المشروع الكامل + كود Cloudflare Worker + كود Google Apps + دليل تنفيذ تفصيلي خطوة بخطوة. كل حاجة تحتاجها لإطلاق منصتك."
         },
         {
           question: "محتاج خبرة برمجة؟",
@@ -237,7 +237,7 @@ var COURSE_DATA = (function () {
         },
         {
           question: "فيه تكاليف شهرية أو مخفية؟",
-          answer: "صفر. الاستضافة مجانية على Cloudflare. الباك إند مجاني على Google Apps Script. التكلفة الوحيدة هي الدومين (حوالي $10-15 سنوياً) — وده اختيارك أنت."
+          answer: "صفر. الاستضافة مجانية على Cloudflare. الباك إند مجاني على Google Apps. التكلفة الوحيدة هي الدومين (حوالي $10-15 سنوياً) — وده اختيارك أنت."
         },
         {
           question: "هتاخدوا نسبة من مبيعاتي؟",
@@ -257,7 +257,7 @@ var COURSE_DATA = (function () {
         },
         {
           question: "المنصة بتدعم عربي وإنجليزي؟",
-          answer: "أيوا. المنصة بتدعم المحتوى العربي (RTL) والإنجليزي (LTR). تقدر تضيف كورسات بأي لغة."
+          answer: "أيوا. المنصة بتدعم المحتوى العربي والإنجليزي . تقدر تضيف كورسات بأي لغة."
         }
       ]
     },
@@ -442,3 +442,4 @@ var COURSE_DATA = (function () {
 })();
 
 if (typeof window !== 'undefined') window.COURSE_DATA = COURSE_DATA;
+
