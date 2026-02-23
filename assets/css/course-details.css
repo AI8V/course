@@ -297,19 +297,50 @@
 .price-display {
   display: flex;
   align-items: baseline;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 1.25rem;
+}
+
+.price-original {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-decoration: line-through;
+  line-height: 1;
 }
 
 .price-current {
   font-size: 2rem;
   font-weight: 800;
-  color: var(--text-primary);
+  color: var(--gold-500);
   line-height: 1;
 }
 
 .price-current.free {
   color: var(--emerald-400);
+}
+
+.price-discount {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gold-400);
+  background: var(--gold-900);
+  padding: 0.25rem 0.65rem;
+  border-radius: 100px;
+  line-height: 1;
+  align-self: center;
+  white-space: nowrap;
+}
+
+.price-discount-dot {
+  font-size: 0.5rem;
+  opacity: 0.6;
 }
 
 /* ── Sidebar Buttons Wrapper ── */
@@ -956,6 +987,12 @@
 @media (max-width: 767.98px) {
   .price-current {
     font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .price-original {
+    font-size: 0.95rem;
   }
 }
 
