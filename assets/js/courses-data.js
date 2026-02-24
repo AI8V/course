@@ -437,12 +437,18 @@ var COURSE_DATA = (function () {
       logoPath: '/assets/img/fav180.png',
 
       legalLastUpdated: '2026-02-20'
+      
+      chatBotName:        'مساعد الكورس',
+      chatWelcomeMessage: 'مرحباً! أنا هنا عشان أساعدك بأي سؤال عن الكورس. اسألني أي حاجة!',
+      chatPlaceholder:    'اكتب سؤالك هنا...',
+      chatErrorMessage:   'حصل مشكلة في الاتصال. جرّب تاني.'
     }
   });
 
 })();
 
 if (typeof window !== 'undefined') window.COURSE_DATA = COURSE_DATA;
+
 
 
 
