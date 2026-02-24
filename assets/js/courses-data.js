@@ -436,7 +436,7 @@ var COURSE_DATA = (function () {
 
       logoPath: '/assets/img/fav180.png',
 
-      legalLastUpdated: '2026-02-20'
+      legalLastUpdated: '2026-02-20',
       
       chatBotName:        'مساعد الكورس',
       chatWelcomeMessage: 'مرحباً! أنا هنا عشان أساعدك بأي سؤال عن الكورس. اسألني أي حاجة!',
@@ -448,6 +448,7 @@ var COURSE_DATA = (function () {
 })();
 
 if (typeof window !== 'undefined') window.COURSE_DATA = COURSE_DATA;
+
 
 
 
