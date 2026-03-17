@@ -94,7 +94,7 @@ var COURSE_DATA = (function () {
       date: "2025-02-21",
       language: "ar",
       description: "استخراج وتنظيف وتحليل بيانات الأنشطة التجارية من جوجل ماب مباشرة. أداة ذكية تعمل بالكامل في متصفحك بدون خوادم. بيانات نظيفة + تحليل ذكي + تصدير Excel جاهز للاستخدام. وصول مدى الحياة + تحديثات مستمرة.",
-      image: "og-image.png",
+      image: "dg-image.png",
       instructor: "DataMap Team",
       tags: ["data", "business", "google maps", "excel", "analytics"],
       driveUrl: "",
