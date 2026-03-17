@@ -81,6 +81,83 @@ var COURSE_DATA = (function () {
   ];
 
   var courses = [
+        {
+      id: 1,
+      title: "DataMap Pro — Business Data Intelligence",
+      category: "Marketing",
+      level: "Beginner",
+      price: 49.00,
+      originalPrice: 99.00,                          // ← الإضافة الوحيدة
+      students: 0,
+      lessons: 1,
+      rating: 0,
+      date: "2025-02-21",
+      language: "ar",
+      description: "استخراج وتنظيف وتحليل بيانات الأنشطة التجارية من جوجل ماب مباشرة. أداة ذكية تعمل بالكامل في متصفحك بدون خوادم. بيانات نظيفة + تحليل ذكي + تصدير Excel جاهز للاستخدام. وصول مدى الحياة + تحديثات مستمرة.",
+      image: "dg-image.png",
+      instructor: "DataMap Team",
+      tags: ["data", "business", "google maps", "excel", "analytics"],
+      driveUrl: "",
+      learningObjectives: [
+        "استخراج بيانات أنشطة تجارية من جوجل ماب مباشرة",
+        "تنظيف البيانات وكشف التكرارات تلقائياً",
+        "تحليل البيانات مع رسوم بيانية وتقارير",
+        "تصدير البيانات بصيغ متعددة (Excel/CSV)",
+        "استخدام الاستنتاجات الذكية لفهم السوق",
+        "بناء قائمة عملاء مؤهلين جاهزة للبيع"
+      ],
+      curriculum: [
+        {
+          title: "البدء السريع",
+          lessons: [
+            { title: "مقدمة الأداة والمميزات", duration: "03:00", preview: true },
+            { title: "خطوات الاستخراج الأول", duration: "05:00", preview: true },
+            { title: "الإعدادات الأساسية", duration: "04:00", preview: false }
+          ]
+        },
+        {
+          title: "التنظيف والتحليل",
+          lessons: [
+            { title: "فهم التكرارات والدمج", duration: "08:00", preview: false },
+            { title: "الفلاتر والبحث المتقدم", duration: "10:00", preview: false },
+            { title: "الرسوم البيانية والتقارير", duration: "07:00", preview: false }
+          ]
+        },
+        {
+          title: "التصدير والاستخدام",
+          lessons: [
+            { title: "تصدير Excel/CSV", duration: "05:00", preview: false },
+            { title: "استخدام البيانات في التسويق", duration: "06:00", preview: false }
+          ]
+        }
+      ],
+      faq: [
+        {
+          question: "هل الأداة حقاً مجانية أم في تكاليف مخفية؟",
+          answer: "49 دولار سنويا = كل شيء. لا تكاليف إضافية. الوصول مدى الحياة والتحديثات مستمرة."
+        },
+        {
+          question: "كم بيانات أقدر أستخرج؟",
+          answer: "بدون حد. الأداة تحمل ملايين السجلات. الحد الوحيد هو حجم ملف الاستيراد (50MB أقصى)."
+        },
+        {
+          question: "البيانات آمنة؟",
+          answer: "100% آمنة. الأداة تعمل بالكامل في متصفحك. لا خوادم، لا تحميل سحابي. بيانات حساسة تبقى عندك."
+        },
+        {
+          question: "أقدر أستخدمها بدون إنترنت؟",
+          answer: "بعد التحميل الأول نعم. الأداة PWA — تعمل offline بالكامل عبر Service Worker."
+        },
+        {
+          question: "في نسخة تجريبية؟",
+          answer: "نعم، جرّب الأداة مجاناً للمدينة الأولى. بدون بطاقة ائتمان. كل شيء متاح."
+        },
+        {
+          question: "كام عميل دفع بالفعل؟",
+          answer: "أنت أول العملاء! 🎉 الأداة جديدة وقيمتها عالية جداً. كن من الأول."
+        }
+      ]
+    },
   {
     id: 2,
     title: "CourseBase — امتلك أكاديميتك الرقمية بالكامل",
@@ -185,110 +262,6 @@ var COURSE_DATA = (function () {
       }
     ]
   },
-    {
-      id: 2,
-      title: "CourseBase — Your Course Website Platform",
-      category: "Business",
-      level: "Beginner",
-      price: 399.00,
-      students: 0,
-      lessons: 1,
-      rating: 0,
-      date: "2026-02-23",
-      language: "ar",
-      description: "منصة كورسات كاملة جاهزة للإطلاق — موقع احترافي باسمك ودومينك الخاص. تحصل على الكود الكامل + دليل تنفيذ خطوة بخطوة. بدون اشتراكات شهرية، بدون نسبة من مبيعاتك، بدون أي تكاليف تشغيل. استضافة مجانية على Cloudflare + نظام حماية محتوى متكامل + نظام تقييمات + تصميم احترافي داكن. كل الأرباح ليك 100%.",
-      image: "co-image.png",
-      instructor: "Ai8V Team",
-      tags: ["website", "course platform", "business", "cloudflare", "Google Apps", "bootstrap", "white-label", "sell courses"],
-      driveUrl: "",
-      learningObjectives: [
-        "الحصول على منصة كورسات كاملة جاهزة للتخصيص والإطلاق",
-        "ربط المنصة بدومينك الخاص واستضافة مجانية على Cloudflare",
-        "إعداد نظام حماية المحتوى المدفوع (Worker + Apps Script + Google Sheets)",
-        "تخصيص الهوية البصرية — الاسم والألوان والشعار والوصف من ملف واحد",
-        "إدارة الطلاب والكورسات يدوياً بدون أي تكاليف تشغيل",
-        "إطلاق موقعك بالكامل — من الدومين للنشر على Cloudflare Pages"
-      ],
-      curriculum: [
-        {
-          title: "ملفات المشروع والتجهيز",
-          lessons: [
-            { title: "محتويات الحزمة — كل اللي هتحصل عليه", duration: "05:00", preview: true },
-            { title: "المتطلبات — حساب GitHub + Cloudflare + Google (كلهم مجاناً)", duration: "03:00", preview: true },
-            { title: "هيكل الملفات وشرح كل مجلد", duration: "08:00", preview: false }
-          ]
-        },
-        {
-          title: "التخصيص — خلّي المنصة باسمك",
-          lessons: [
-            { title: "تعديل بيانات الكورسات — الاسم والدومين والواتساب والوصف", duration: "10:00", preview: false },
-            { title: "تغيير الألوان والشعار والصور", duration: "07:00", preview: false },
-            { title: "إضافة كورساتك الخاصة — البيانات والمنهج والأسئلة", duration: "12:00", preview: false },
-            { title: "تعديل صفحات About والسياسات باسم مشروعك", duration: "06:00", preview: false }
-          ]
-        },
-        {
-          title: "الباك إند — نظام الحماية والتقييمات",
-          lessons: [
-            { title: "إنشاء ملف اكسيل بسيط  لإدارة الطلبة المسجلين", duration: "05:00", preview: false },
-            { title: " ربط الـ باك إند بالـ Sheet", duration: "08:00", preview: false },
-            { title: "إعداد Cloudflare Worker — الأسرار والمتغيرات والروابط", duration: "10:00", preview: false },
-            { title: "اختبار نظام الدخول والتقييمات", duration: "06:00", preview: false }
-          ]
-        },
-        {
-          title: "النشر والإطلاق",
-          lessons: [
-            { title: "رفع المشروع على GitHub", duration: "04:00", preview: false },
-            { title: "ربط GitHub بـ Cloudflare Pages", duration: "05:00", preview: false },
-            { title: "إعداد الدومين الخاص وشهادة SSL", duration: "06:00", preview: false },
-            { title: "اختبار الموقع بالكامل قبل الإطلاق", duration: "05:00", preview: false }
-          ]
-        },
-        {
-          title: "إدارة المنصة بعد الإطلاق",
-          lessons: [
-            { title: "إضافة طالب جديد — للـ Sheet", duration: "04:00", preview: false },
-            { title: "إضافة كورس جديد وتحديث المحتوى", duration: "06:00", preview: false },
-            { title: "التعامل مع المشاكل الشائعة وحلولها", duration: "05:00", preview: false }
-          ]
-        }
-      ],
-      faq: [
-        {
-          question: "إيه اللي هحصل عليه بالظبط؟",
-          answer: "كود المشروع الكامل + كود Cloudflare Worker + كود Google Apps + دليل تنفيذ تفصيلي خطوة بخطوة. كل حاجة تحتاجها لإطلاق منصتك."
-        },
-        {
-          question: "محتاج خبرة برمجة؟",
-          answer: "لا. الدليل مصمم لأي حد يقدر يستخدم الكمبيوتر. كل خطوة موضحة بالتفصيل. التخصيص الأساسي هو تعديل ملف واحد فيه بياناتك."
-        },
-        {
-          question: "فيه تكاليف شهرية أو مخفية؟",
-          answer: "صفر. الاستضافة مجانية على Cloudflare. الباك إند مجاني على Google Apps. التكلفة الوحيدة هي الدومين (حوالي $10-15 سنوياً) — وده اختيارك أنت."
-        },
-        {
-          question: "هتاخدوا نسبة من مبيعاتي؟",
-          answer: "لا. المنصة ملكك 100%. كل الأرباح ليك. بتبيع بالسعر اللي أنت عايزه وبتقبض الفلوس مباشرة."
-        },
-        {
-          question: "أقدر أبيع كورسات بأي سعر؟",
-          answer: "أيوا. مفيش حد أدنى أو أقصى. أنت بتحدد أسعارك بالكامل."
-        },
-        {
-          question: "أقدر أضيف كام كورس؟",
-          answer: "بدون حد. تضيف كورسات في ملف البيانات وكل حاجة بتتحدث تلقائياً — الكتالوج والصفحة الرئيسية والفلاتر."
-        },
-        {
-          question: "لو واجهتني مشكلة في التنفيذ؟",
-          answer: "تواصل معانا على واتساب. هنساعدك توصل لحل لأي مشكلة تقنية تواجهك."
-        },
-        {
-          question: "المنصة بتدعم عربي وإنجليزي؟",
-          answer: "أيوا. المنصة بتدعم المحتوى العربي والإنجليزي . تقدر تضيف كورسات بأي لغة."
-        }
-      ]
-    },
     /*
     {
       id: 3,
